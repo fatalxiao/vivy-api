@@ -9,7 +9,7 @@ import {Provider} from 'react-redux';
 
 // Import Vivy
 import Vivy, {registerModel} from 'vivy';
-import VivyApi from '../../../src';
+import VivyApi from 'vivy-api';
 
 // Sync component and model
 import UserList from './modules/UserList/containers/UserList';

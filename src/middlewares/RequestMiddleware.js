@@ -24,7 +24,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
 
         const options = action[CALL_API];
 
-        // not an api action
+        // Not an api action
         if (typeof options === 'undefined') {
             return next(action);
         }
@@ -38,7 +38,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
             ...restOptions,
             type: requestType
         });
-        dispatch({
+        next({
             type: `${modelNameSpace}/request`,
             nameSpace,
             apiActionName
@@ -62,7 +62,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                     response
                 }
             });
-            dispatch({
+            next({
                 type: `${modelNameSpace}/success`,
                 nameSpace,
                 apiActionName
@@ -78,7 +78,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                     response
                 }
             });
-            dispatch({
+            next({
                 type: `${modelNameSpace}/failure`,
                 nameSpace,
                 apiActionName

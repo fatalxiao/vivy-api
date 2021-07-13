@@ -23,8 +23,15 @@ const vivy = Vivy(history);
 
 // Apply api plugin
 vivy.use(VivyApi({
+
+    // Customized api status model name space
     modelNameSpace: 'customizedApiStatus',
+
+    // Customized check response status callback
+    // to tell whether response is successful
     checkResponseStatus: response => response?.data?.code === 2000,
+
+    // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
 
         const {response, successCallback} = action;
@@ -37,10 +44,13 @@ vivy.use(VivyApi({
         });
 
     },
+
+    // A middleware like callback to handle the failure response
     failureResponseHandler: ({dispatch, getState}) => next => action => {
         const {response, failureCallback} = action;
         failureCallback?.(response);
     }
+
 }));
 
 // Create store after configuration

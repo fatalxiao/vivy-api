@@ -3,7 +3,7 @@
  */
 
 // Models
-import apiStatus from './models/apiStatus';
+import createApiStatus from './models/apiStatus';
 
 // Middlewares
 import createModelApiActionMiddleware from './middlewares/ModelApiActionMiddleware';
@@ -26,7 +26,7 @@ export default function createVivyApiPlugin(options = {}) {
         checkResponseStatus, successResponseHandler, failureResponseHandler
     } = options;
 
-    // 用于加载和调用异步 api 的 ModelApiActionMiddleware
+    // Create ModelApiActionMiddleware
     const ModelApiActionMiddleware = createModelApiActionMiddleware();
 
     return {
@@ -37,13 +37,13 @@ export default function createVivyApiPlugin(options = {}) {
             createFailureResponseMiddleware(options?.failureResponseHandler)
         ],
         extraModels: [
-            apiStatus
+            createApiStatus(modelNameSpace)
         ],
         onRegisterModel: model => {
 
             const {nameSpace, apis} = model;
 
-            // register api actions
+            // Register api actions
             if (apis) {
                 ModelApiActionMiddleware.register(nameSpace, apis || {});
             }

@@ -4,40 +4,68 @@
 
 import ApiStatus from '../statics/ApiStatus';
 
-export default {
-    nameSpace: 'apiStatus',
-    state: {},
-    reducers: {
+/**
+ * Create apiStatus model
+ * @param nameSpace
+ * @returns {{}}
+ */
+export default function createApiStatus(nameSpace) {
+    return {
+        nameSpace: nameSpace || 'apiStatus',
+        state: {},
+        reducers: {
 
-        request: (state, {nameSpace, apiActionName}) => {
-            return {
-                ...state,
-                [nameSpace]: {
-                    ...state.nameSpace,
-                    [apiActionName]: ApiStatus.REQUEST
-                }
-            };
-        },
+            /**
+             * Update request status
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
+             * @returns {*}
+             */
+            request: (state, {nameSpace, apiActionName}) => {
+                return {
+                    ...state,
+                    [nameSpace]: {
+                        ...state.nameSpace,
+                        [apiActionName]: ApiStatus.REQUEST
+                    }
+                };
+            },
 
-        success: (state, {nameSpace, apiActionName}) => {
-            return {
-                ...state,
-                [nameSpace]: {
-                    ...state.nameSpace,
-                    [apiActionName]: ApiStatus.SUCCESS
-                }
-            };
-        },
+            /**
+             * Update success status
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
+             * @returns {*}
+             */
+            success: (state, {nameSpace, apiActionName}) => {
+                return {
+                    ...state,
+                    [nameSpace]: {
+                        ...state.nameSpace,
+                        [apiActionName]: ApiStatus.SUCCESS
+                    }
+                };
+            },
 
-        failure: (state, {nameSpace, apiActionName}) => {
-            return {
-                ...state,
-                [nameSpace]: {
-                    ...state.nameSpace,
-                    [apiActionName]: ApiStatus.FAILURE
-                }
-            };
+            /**
+             * Update failure status
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
+             * @returns {*}
+             */
+            failure: (state, {nameSpace, apiActionName}) => {
+                return {
+                    ...state,
+                    [nameSpace]: {
+                        ...state.nameSpace,
+                        [apiActionName]: ApiStatus.FAILURE
+                    }
+                };
+            }
+
         }
-
-    }
-};
+    };
+}

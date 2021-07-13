@@ -66,20 +66,25 @@ const UserList = ({
                 {message}
             </div>
 
-            {
-                getUserListStatus === ApiStatus.REQUEST ?
-                    'loading'
-                    :
-                    <ul>
-                        {
-                            data?.map((item, index) =>
-                                <li key={index}>
-                                    {item}
-                                </li>
-                            )
-                        }
-                    </ul>
-            }
+            <div className="result">
+                {
+                    getUserListStatus === ApiStatus.REQUEST ?
+                        'loading'
+                        :
+                        data?.length > 0 ?
+                            <ul>
+                                {
+                                    data?.map((item, index) =>
+                                        <li key={index}>
+                                            {item}
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                            :
+                            'No matched data'
+                }
+            </div>
 
         </div>
     );
@@ -99,5 +104,5 @@ UserList.propTypes = {
 export default connect(state => ({
     data: state.userList.data,
     message: state.userList.message,
-    getUserListStatus: state.apiStatus.userList?.getUserList
+    getUserListStatus: state.customizedApiStatus.userList?.getUserList
 }))(UserList);

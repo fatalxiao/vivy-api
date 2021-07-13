@@ -23,6 +23,7 @@ const vivy = Vivy(history);
 
 // Apply api plugin
 vivy.use(VivyApi({
+    modelNameSpace: 'customizedApiStatus',
     checkResponseStatus: response => response?.data?.code === 2000,
     successResponseHandler: ({dispatch, getState}) => next => action => {
 

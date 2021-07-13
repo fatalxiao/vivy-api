@@ -2,16 +2,24 @@
  * @file RequestMiddleware.js
  */
 
-import {
-    CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE,
-    API_STATUS_REQUEST, API_STATUS_SUCCESS, API_STATUS_FAILURE
-} from '../actionTypes/CallApi';
+import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApi';
 
+/**
+ * Default check respopnse status callback
+ * @param response
+ * @returns {boolean}
+ */
 function defaultCheckResponseStatus(response) {
     return response.status >= 200 && response.status < 300;
 }
 
-export default function createRequestMiddleware(checkResponseStatus) {
+/**
+ * Create RequestMiddleware
+ * @param modelNameSpace
+ * @param checkResponseStatus
+ * @returns {function({dispatch: *}): function(*): function(*=): Promise<*|undefined>}
+ */
+export default function createRequestMiddleware(modelNameSpace, checkResponseStatus) {
     return ({dispatch}) => next => async action => {
 
         const options = action[CALL_API];
@@ -25,18 +33,18 @@ export default function createRequestMiddleware(checkResponseStatus) {
             {nameSpace, apiActionName, types} = callApiParams,
             [requestType, successType, failureType] = types;
 
-        // next request action
+        // Do request action
         next({
             ...restOptions,
             type: requestType
         });
         dispatch({
-            type: API_STATUS_REQUEST,
+            type: `${modelNameSpace}/request`,
             nameSpace,
             apiActionName
         });
 
-        // call api and get response
+        // Call api and get response
         const response = await api(params);
 
         if (
@@ -45,6 +53,8 @@ export default function createRequestMiddleware(checkResponseStatus) {
                 :
                 defaultCheckResponseStatus(response)
         ) {
+
+            // Do success action
             next({
                 [CALL_API_SUCCESS]: {
                     ...restOptions,
@@ -53,11 +63,14 @@ export default function createRequestMiddleware(checkResponseStatus) {
                 }
             });
             dispatch({
-                type: API_STATUS_SUCCESS,
+                type: `${modelNameSpace}/success`,
                 nameSpace,
                 apiActionName
             });
+
         } else {
+
+            // Do failure action
             next({
                 [CALL_API_FAILURE]: {
                     ...restOptions,
@@ -66,10 +79,11 @@ export default function createRequestMiddleware(checkResponseStatus) {
                 }
             });
             dispatch({
-                type: API_STATUS_FAILURE,
+                type: `${modelNameSpace}/failure`,
                 nameSpace,
                 apiActionName
             });
+
         }
 
     };

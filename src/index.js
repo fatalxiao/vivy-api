@@ -19,7 +19,12 @@ export ApiStatus from './statics/ApiStatus';
  * @param options
  * @returns {{}}
  */
-export default function createVivyApiPlugin(options) {
+export default function createVivyApiPlugin(options = {}) {
+
+    const {
+        modelNameSpace,
+        checkResponseStatus, successResponseHandler, failureResponseHandler
+    } = options;
 
     // 用于加载和调用异步 api 的 ModelApiActionMiddleware
     const ModelApiActionMiddleware = createModelApiActionMiddleware();
@@ -27,7 +32,7 @@ export default function createVivyApiPlugin(options) {
     return {
         extraMiddlewares: [
             ModelApiActionMiddleware,
-            createRequestMiddleware(options?.checkResponseStatus),
+            createRequestMiddleware(modelNameSpace, options?.checkResponseStatus),
             createSuccessResponseMiddleware(options?.successResponseHandler),
             createFailureResponseMiddleware(options?.failureResponseHandler)
         ],

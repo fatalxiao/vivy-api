@@ -36,7 +36,9 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
         // Do request action
         next({
             ...restOptions,
-            type: requestType
+            type: requestType,
+            api,
+            params
         });
         next({
             type: `${modelNameSpace}/request`,
@@ -59,6 +61,8 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                 [CALL_API_SUCCESS]: {
                     ...restOptions,
                     type: successType,
+                    api,
+                    params,
                     response
                 }
             });
@@ -75,6 +79,8 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                 [CALL_API_FAILURE]: {
                     ...restOptions,
                     type: failureType,
+                    api,
+                    params,
                     response
                 }
             });

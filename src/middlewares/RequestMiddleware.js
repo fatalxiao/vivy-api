@@ -47,7 +47,10 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
         });
 
         // Call api and get response
-        const response = await api(params);
+        const response = await api({
+            ...restOptions,
+            params
+        });
 
         if (
             checkResponseStatus && typeof checkResponseStatus === 'function' ?

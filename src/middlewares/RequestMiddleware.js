@@ -46,52 +46,58 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
             apiActionName
         });
 
-        // Call api and get response
-        const response = await api({
-            ...restOptions,
-            params
-        });
+        try {
 
-        if (
-            checkResponseStatus && typeof checkResponseStatus === 'function' ?
-                checkResponseStatus(response)
-                :
-                defaultCheckResponseStatus(response)
-        ) {
-
-            // Do success action
-            next({
-                [CALL_API_SUCCESS]: {
-                    ...restOptions,
-                    type: successType,
-                    api,
-                    params,
-                    response
-                }
-            });
-            next({
-                type: `${modelNameSpace}/success`,
-                nameSpace,
-                apiActionName
+            // Call api and get response
+            const response = await api({
+                ...restOptions,
+                params
             });
 
-        } else {
+            if (
+                checkResponseStatus && typeof checkResponseStatus === 'function' ?
+                    checkResponseStatus(response)
+                    :
+                    defaultCheckResponseStatus(response)
+            ) {
 
-            // Do failure action
-            next({
-                [CALL_API_FAILURE]: {
-                    ...restOptions,
-                    type: failureType,
-                    api,
-                    params,
-                    response
-                }
-            });
-            next({
-                type: `${modelNameSpace}/failure`,
-                nameSpace,
-                apiActionName
-            });
+                // Do success action
+                next({
+                    [CALL_API_SUCCESS]: {
+                        ...restOptions,
+                        type: successType,
+                        api,
+                        params,
+                        response
+                    }
+                });
+                next({
+                    type: `${modelNameSpace}/success`,
+                    nameSpace,
+                    apiActionName
+                });
+
+            } else {
+
+                // Do failure action
+                next({
+                    [CALL_API_FAILURE]: {
+                        ...restOptions,
+                        type: failureType,
+                        api,
+                        params,
+                        response
+                    }
+                });
+                next({
+                    type: `${modelNameSpace}/failure`,
+                    nameSpace,
+                    apiActionName
+                });
+
+            }
+
+        } catch (e) {
 
         }
 

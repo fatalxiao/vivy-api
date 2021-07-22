@@ -51,12 +51,12 @@ export default function createModelApiActionMiddleware() {
 
         return next => action => {
 
-            // match type in async api actions
-            if (asyncApiActions?.hasOwnProperty(action?.type)) {
-                asyncApiActions[action.type]?.(action)?.(dispatchApi(action.type), dispatch, getState);
+            if (!asyncApiActions?.hasOwnProperty(action?.type)) {
+                next(action);
             }
 
-            return next(action);
+            // match type in async api actions
+            asyncApiActions[action.type]?.(action)?.(dispatchApi(action.type), dispatch, getState);
 
         };
 

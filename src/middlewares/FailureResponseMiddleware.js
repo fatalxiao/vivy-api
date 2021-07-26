@@ -2,8 +2,13 @@
  * @file FailureResponseMiddleware.js
  */
 
-import {CALL_API_FAILURE} from '../actionTypes/CallApi';
+import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
+/**
+ * Create FailureResponseMiddleware
+ * @param failureResponseHandler
+ * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
+ */
 export default function createFailureResponseMiddleware(failureResponseHandler) {
     return ({dispatch, getState}) => next => action => {
 

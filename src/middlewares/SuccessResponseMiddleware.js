@@ -2,8 +2,13 @@
  * @file SuccessResponseMiddleware.js
  */
 
-import {CALL_API_SUCCESS} from '../actionTypes/CallApi';
+import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
 
+/**
+ * Create SuccessResponseMiddleware
+ * @param successResponseHandler
+ * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
+ */
 export default function createSuccessResponseMiddleware(successResponseHandler) {
     return ({dispatch, getState}) => next => action => {
 

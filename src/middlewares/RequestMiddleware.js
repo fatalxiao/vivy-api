@@ -2,7 +2,9 @@
  * @file RequestMiddleware.js
  */
 
-import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApi';
+import {
+    CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE
+} from '../actionTypes/CallApiActionType';
 
 /**
  * Default check respopnse status callback

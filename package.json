@@ -2,7 +2,7 @@
     "name": "vivy-api",
     "author": "liangxiaojun",
     "version": "0.1.4",
-    "description": "vivy api",
+    "description": "vivy api plugin",
     "main": "./dist/index.js",
     "files": [
         "src",

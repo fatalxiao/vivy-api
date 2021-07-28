@@ -17,11 +17,11 @@ function defaultCheckResponseStatus(response) {
 
 /**
  * Create RequestMiddleware
- * @param modelNameSpace
+ * @param apiStatusModelNameSpace
  * @param checkResponseStatus
  * @returns {function({dispatch: *}): function(*): function(*=): Promise<*|undefined>}
  */
-export default function createRequestMiddleware(modelNameSpace, checkResponseStatus) {
+export default function createRequestMiddleware(apiStatusModelNameSpace, checkResponseStatus) {
     return ({dispatch}) => next => async action => {
 
         const options = action[CALL_API];
@@ -43,7 +43,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
             params
         });
         next({
-            type: `${modelNameSpace}/request`,
+            type: `${apiStatusModelNameSpace}/request`,
             nameSpace,
             apiActionName
         });
@@ -74,7 +74,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                     }
                 });
                 next({
-                    type: `${modelNameSpace}/success`,
+                    type: `${apiStatusModelNameSpace}/success`,
                     nameSpace,
                     apiActionName
                 });
@@ -92,7 +92,7 @@ export default function createRequestMiddleware(modelNameSpace, checkResponseSta
                     }
                 });
                 next({
-                    type: `${modelNameSpace}/failure`,
+                    type: `${apiStatusModelNameSpace}/failure`,
                     nameSpace,
                     apiActionName
                 });

@@ -16,10 +16,10 @@ export ApiStatus from './statics/ApiStatus';
 
 /**
  * Default vivy-api options
- * @type {{checkResponseStatus: (function(*)), modelNameSpace: string}}
+ * @type {{checkResponseStatus: (function(*)), apiStatusModelNameSpace: string}}
  */
 const DEFAULT_OPTIONS = {
-    modelNameSpace: 'apiStatus',
+    apiStatusModelNameSpace: 'apiStatus',
     checkResponseStatus: response => response.status >= 200 && response.status < 300
 };
 
@@ -30,12 +30,12 @@ const DEFAULT_OPTIONS = {
  */
 export default function createVivyApiPlugin(options = {}) {
 
-    const op = {...DEFAULT_OPTIONS, ...options};
+    const opts = {...DEFAULT_OPTIONS, ...options};
 
     const {
-        modelNameSpace,
+        apiStatusModelNameSpace,
         checkResponseStatus, successResponseHandler, failureResponseHandler
-    } = op;
+    } = opts;
 
     // Create ModelApiActionMiddleware
     const ModelApiActionMiddleware = createModelApiActionMiddleware();
@@ -43,12 +43,12 @@ export default function createVivyApiPlugin(options = {}) {
     return {
         extraMiddlewares: [
             ModelApiActionMiddleware,
-            createRequestMiddleware(modelNameSpace, checkResponseStatus),
+            createRequestMiddleware(apiStatusModelNameSpace, checkResponseStatus),
             createSuccessResponseMiddleware(successResponseHandler),
             createFailureResponseMiddleware(failureResponseHandler)
         ],
         extraModels: [
-            createApiStatus(modelNameSpace)
+            createApiStatus(apiStatusModelNameSpace)
         ],
         onRegisterModel: model => {
 

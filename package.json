@@ -1,14 +1,15 @@
 {
     "name": "vivy-api",
     "author": "liangxiaojun",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "vivy api plugin",
     "main": "./dist/index.js",
     "files": [
         "src",
         "dist",
         "LICENSE",
-        "README.md"
+        "README.md",
+        "index.d.ts"
     ],
     "scripts": {
         "build": "gulp",

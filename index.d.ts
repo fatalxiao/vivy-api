@@ -2,6 +2,8 @@ import {
     Middleware
 } from 'redux';
 
+export type ApiStatus = Object;
+
 export interface VivyApiPluginOption {
 
     /**

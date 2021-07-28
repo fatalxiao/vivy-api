@@ -1,34 +1,22 @@
 {
-    "name": "vivy-api",
+    "name": "vivy-api-plugin-example",
     "author": "liangxiaojun",
-    "version": "0.1.4",
-    "description": "vivy api plugin",
-    "main": "./dist/index.js",
-    "files": [
-        "src",
-        "dist",
-        "LICENSE",
-        "README.md"
-    ],
+    "private": true,
+    "main": "./src/index.js",
     "scripts": {
-        "build": "gulp",
-        "do-publish": "npm run build && npm publish"
+        "start": "webpack-dev-server --open --hot --config webpack.config.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/fatalxiao/vivy-api"
-    },
-    "keywords": [
-        "redux",
-        "vivy"
-    ],
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/fatalxiao/vivy-api/issues"
+    "dependencies": {
+        "axios": "^0.21.1",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-redux": "^7.2.4",
+        "vivy": "^0.2.1",
+        "vivy-api": "^0.1.4"
     },
     "devDependencies": {
         "@babel/core": "^7.14.8",
-        "@babel/eslint-parser": "^7.14.7",
         "@babel/plugin-proposal-class-properties": "^7.14.5",
         "@babel/plugin-proposal-decorators": "^7.14.5",
         "@babel/plugin-proposal-do-expressions": "^7.14.5",
@@ -50,12 +38,19 @@
         "@babel/preset-react": "^7.14.5",
         "@babel/runtime": "^7.14.8",
         "babel-core": "^7.0.0-bridge.0",
-        "core-js": "^3.15.2",
-        "eslint": "^7.31.0",
-        "eslint-plugin-react": "^7.24.0",
-        "eslint-plugin-react-hooks": "^4.2.0",
-        "gulp": "^4.0.2",
-        "gulp-babel": "^8.0.0",
-        "gulp-clean": "^0.4.0"
+        "babel-loader": "^8.2.2",
+        "css-loader": "^5.2.7",
+        "html-webpack-plugin": "^5.3.2",
+        "postcss": "^8.3.6",
+        "postcss-loader": "^6.1.1",
+        "postcss-preset-env": "^6.7.0",
+        "sass": "^1.36.0",
+        "sass-loader": "^12.1.0",
+        "style-loader": "^3.2.1",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.47.0",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^4.0.0-beta.3",
+        "webpack-merge": "^5.8.0"
     }
 }

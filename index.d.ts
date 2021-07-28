@@ -5,11 +5,11 @@ import {
 /**
  * Api status
  */
-export type ApiStatus = {
+export interface ApiStatus {
     REQUEST: 'REQUEST',
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE'
-};
+}
 
 export interface VivyApiPluginOption {
 

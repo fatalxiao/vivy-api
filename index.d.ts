@@ -1,6 +1,4 @@
-import {
-    Middleware
-} from 'redux';
+import {Middleware} from 'redux';
 
 import * as ApiStatus from './src/statics/ApiStatus';
 
@@ -37,4 +35,4 @@ export interface VivyApiPluginOption {
  * Create Vivy api plugin instance
  * @param options
  */
-export default function createVivyApiPlugin(options?: VivyApiPluginOption): Object;
+export default function createVivyApiPlugin(options?: VivyApiPluginOption);

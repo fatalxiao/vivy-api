@@ -2,14 +2,12 @@ import {
     Middleware
 } from 'redux';
 
+import * as ApiStatus from './src/statics/ApiStatus';
+
 /**
  * Api status
  */
-export interface ApiStatus {
-    REQUEST?: string,
-    SUCCESS?: string,
-    FAILURE?: string
-}
+export {ApiStatus};
 
 export interface VivyApiPluginOption {
 

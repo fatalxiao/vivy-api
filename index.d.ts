@@ -36,6 +36,5 @@ export interface VivyApiPluginOption {
 /**
  * Create Vivy api plugin instance
  * @param options
- * @constructor
  */
-export default function createVivyApiPlugin(options?: VivyApiPluginOption);
+export default function createVivyApiPlugin(options?: VivyApiPluginOption): Object;

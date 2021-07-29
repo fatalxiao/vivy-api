@@ -7,7 +7,7 @@ import {CALL_API, CALL_API_PARAMS} from '../actionTypes/CallApiActionType';
 
 /**
  * ModelApiActionMiddleware creater
- * @returns {function({dispatch?: *, getState?: *}): function(*): function(*=): *}
+ * @returns {function({dispatch?: *, getState?: *}): function(*): function(*=): (*)}
  */
 export default function createModelApiActionMiddleware() {
 
@@ -16,17 +16,17 @@ export default function createModelApiActionMiddleware() {
 
     /**
      * ModelApiActionMiddleware
-     * @param dispatch
-     * @param getState
-     * @returns {function(*): function(*=): *}
+     * @param dispatch {Function}
+     * @param getState {Function}
+     * @returns {function(*): function(*=): (*)}
      * @constructor
      */
     function ModelApiActionMiddleware({dispatch, getState}) {
 
         /**
-         * dispatch an Api
-         * @param type
-         * @returns {function(*): *}
+         * Dispatch an api action
+         * @param type {string}
+         * @returns {(function(*): void)|*}
          */
         const dispatchApi = type => apiAction => {
 
@@ -63,9 +63,9 @@ export default function createModelApiActionMiddleware() {
     }
 
     /**
-     * register async api actions
-     * @param nameSpace
-     * @param apis
+     * Register async api actions
+     * @param nameSpace {string}
+     * @param apis {Object}
      */
     ModelApiActionMiddleware.register = (nameSpace, apis) => Object.keys(apis).forEach(type =>
         asyncApiActions[`${nameSpace}/${type}`] = apis[type]

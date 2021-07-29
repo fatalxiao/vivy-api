@@ -6,7 +6,7 @@ import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 /**
  * Create FailureResponseMiddleware
- * @param failureResponseHandler
+ * @param failureResponseHandler {Function}
  * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
  */
 export default function createFailureResponseMiddleware(failureResponseHandler) {

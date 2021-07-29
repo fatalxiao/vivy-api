@@ -2,13 +2,14 @@
  * @file RequestMiddleware.js
  */
 
+// Action Types
 import {
     CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE
 } from '../actionTypes/CallApiActionType';
 
 /**
  * Default check respopnse status callback
- * @param response
+ * @param response {Object}
  * @returns {boolean}
  */
 function defaultCheckResponseStatus(response) {
@@ -17,8 +18,8 @@ function defaultCheckResponseStatus(response) {
 
 /**
  * Create RequestMiddleware
- * @param apiStatusModelNameSpace
- * @param checkResponseStatus
+ * @param apiStatusModelNameSpace {string}
+ * @param checkResponseStatus {Function}
  * @returns {function({dispatch: *}): function(*): function(*=): Promise<*|undefined>}
  */
 export default function createRequestMiddleware(apiStatusModelNameSpace, checkResponseStatus) {

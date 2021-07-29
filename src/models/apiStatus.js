@@ -2,12 +2,13 @@
  * @file apiStatus.js
  */
 
+// Statics
 import ApiStatus from '../statics/ApiStatus';
 
 /**
  * Create apiStatus model
- * @param nameSpace
- * @returns {{}}
+ * @param nameSpace {string}
+ * @returns {{reducers: {request: (function(*, {nameSpace: *, apiActionName: *}): *), success: (function(*, {nameSpace: *, apiActionName: *}): *), failure: (function(*, {nameSpace: *, apiActionName: *}): *)}, nameSpace: string, state: {}}}
  */
 export default function createApiStatus(nameSpace) {
     return {
@@ -17,9 +18,9 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update request status
-             * @param state
-             * @param nameSpace
-             * @param apiActionName
+             * @param state {Object}
+             * @param nameSpace {string}
+             * @param apiActionName {string}
              * @returns {*}
              */
             request: (state, {nameSpace, apiActionName}) => {
@@ -34,9 +35,9 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update success status
-             * @param state
-             * @param nameSpace
-             * @param apiActionName
+             * @param state {Object}
+             * @param nameSpace {string}
+             * @param apiActionName {string}
              * @returns {*}
              */
             success: (state, {nameSpace, apiActionName}) => {
@@ -51,9 +52,9 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update failure status
-             * @param state
-             * @param nameSpace
-             * @param apiActionName
+             * @param state {Object}
+             * @param nameSpace {string}
+             * @param apiActionName {string}
              * @returns {*}
              */
             failure: (state, {nameSpace, apiActionName}) => {

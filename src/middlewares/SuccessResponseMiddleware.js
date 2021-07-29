@@ -6,7 +6,7 @@ import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
 
 /**
  * Create SuccessResponseMiddleware
- * @param successResponseHandler
+ * @param successResponseHandler {Function}
  * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
  */
 export default function createSuccessResponseMiddleware(successResponseHandler) {

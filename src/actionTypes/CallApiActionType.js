@@ -1,5 +1,5 @@
 /**
- * @file CallApi.js
+ * @file CallApiActionType.js
  */
 
 export const CALL_API = '@@VIVY/CALL_API';

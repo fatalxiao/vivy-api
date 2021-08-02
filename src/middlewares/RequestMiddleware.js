@@ -49,13 +49,12 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
             apiActionName
         });
 
-        try {
-
-            // Call api and get response
-            const response = await api({
-                ...restOptions,
-                params
-            });
+        /**
+         * Handle seccess / failure response
+         * @param response
+         * @param error
+         */
+        function handleResponse(response, error) {
 
             if (
                 checkResponseStatus && typeof checkResponseStatus === 'function' ?
@@ -89,7 +88,8 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
                         type: failureType,
                         api,
                         params,
-                        response
+                        response,
+                        error
                     }
                 });
                 next({
@@ -100,24 +100,20 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
 
             }
 
-        } catch (e) {
+        }
 
-            // Do failure action
-            next({
-                [CALL_API_FAILURE]: {
-                    ...restOptions,
-                    type: failureType,
-                    api,
-                    params,
-                    e
-                }
-            });
-            next({
-                type: `${apiStatusModelNameSpace}/failure`,
-                nameSpace,
-                apiActionName
+        try {
+
+            // Call api and get response
+            const response = await api({
+                ...restOptions,
+                params
             });
 
+            handleResponse(response);
+
+        } catch (error) {
+            handleResponse(error?.response, error);
         }
 
     };

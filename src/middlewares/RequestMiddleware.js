@@ -102,6 +102,21 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
 
         } catch (e) {
 
+            // Do failure action
+            next({
+                [CALL_API_FAILURE]: {
+                    ...restOptions,
+                    type: failureType,
+                    api,
+                    params
+                }
+            });
+            next({
+                type: `${apiStatusModelNameSpace}/failure`,
+                nameSpace,
+                apiActionName
+            });
+
         }
 
     };

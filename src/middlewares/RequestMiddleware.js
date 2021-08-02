@@ -108,7 +108,8 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
                     ...restOptions,
                     type: failureType,
                     api,
-                    params
+                    params,
+                    e
                 }
             });
             next({

@@ -27,7 +27,7 @@ export default function createApiStatus(nameSpace) {
                 return {
                     ...state,
                     [nameSpace]: {
-                        ...state.nameSpace,
+                        ...state[nameSpace],
                         [apiActionName]: ApiStatus.REQUEST
                     }
                 };
@@ -44,7 +44,7 @@ export default function createApiStatus(nameSpace) {
                 return {
                     ...state,
                     [nameSpace]: {
-                        ...state.nameSpace,
+                        ...state[nameSpace],
                         [apiActionName]: ApiStatus.SUCCESS
                     }
                 };
@@ -61,7 +61,7 @@ export default function createApiStatus(nameSpace) {
                 return {
                     ...state,
                     [nameSpace]: {
-                        ...state.nameSpace,
+                        ...state[nameSpace],
                         [apiActionName]: ApiStatus.FAILURE
                     }
                 };

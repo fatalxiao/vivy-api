@@ -37,7 +37,7 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
             [requestType, successType, failureType] = types;
 
         // Do request action
-        dispatch({
+        next({
             ...restOptions,
             type: requestType,
             api,
@@ -64,7 +64,7 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
             ) {
 
                 // Do success action
-                dispatch({
+                next({
                     [CALL_API_SUCCESS]: {
                         ...restOptions,
                         type: successType,
@@ -82,7 +82,7 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
             } else {
 
                 // Do failure action
-                dispatch({
+                next({
                     [CALL_API_FAILURE]: {
                         ...restOptions,
                         type: failureType,

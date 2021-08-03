@@ -5,6 +5,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
+import axios from 'axios';
 
 // Import Vivy
 import Vivy, {registerModel} from 'vivy';
@@ -43,8 +44,16 @@ vivy.use(VivyApi({
 
     // A middleware like callback to handle the failure response
     failureResponseHandler: ({dispatch, getState}) => next => action => {
-        const {response, failureCallback} = action;
+
+        const {response, error, failureCallback} = action;
+
+        // Ignore cancelled request
+        if (axios.isCancel(error)) {
+            return;
+        }
+
         failureCallback?.(response);
+
     }
 
 }));

@@ -3,9 +3,7 @@
  */
 
 // Action Types
-import {
-    CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE
-} from '../actionTypes/CallApiActionType';
+import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 /**
  * Default check respopnse status callback
@@ -50,11 +48,59 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
         });
 
         /**
+         * Handle seccess response
+         * @param response
+         */
+        function handleSuccessResponse(response) {
+            next({
+                [CALL_API_SUCCESS]: {
+                    ...restOptions,
+                    type: successType,
+                    api,
+                    params,
+                    response
+                }
+            });
+            dispatch({
+                type: `${apiStatusModelNameSpace}/success`,
+                nameSpace,
+                apiActionName
+            });
+        }
+
+        /**
+         * Handle failure response
+         * @param response
+         * @param error
+         */
+        function handleFailureResponse(response, error) {
+            next({
+                [CALL_API_FAILURE]: {
+                    ...restOptions,
+                    type: failureType,
+                    api,
+                    params,
+                    response,
+                    error
+                }
+            });
+            dispatch({
+                type: `${apiStatusModelNameSpace}/failure`,
+                nameSpace,
+                apiActionName
+            });
+        }
+
+        /**
          * Handle seccess / failure response
          * @param response
          * @param error
          */
         function handleResponse(response, error) {
+
+            if (error) {
+                return handleFailureResponse(response, error);
+            }
 
             if (
                 checkResponseStatus && typeof checkResponseStatus === 'function' ?
@@ -62,42 +108,9 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
                     :
                     defaultCheckResponseStatus(response)
             ) {
-
-                // Do success action
-                next({
-                    [CALL_API_SUCCESS]: {
-                        ...restOptions,
-                        type: successType,
-                        api,
-                        params,
-                        response
-                    }
-                });
-                dispatch({
-                    type: `${apiStatusModelNameSpace}/success`,
-                    nameSpace,
-                    apiActionName
-                });
-
+                handleSuccessResponse(response);
             } else {
-
-                // Do failure action
-                next({
-                    [CALL_API_FAILURE]: {
-                        ...restOptions,
-                        type: failureType,
-                        api,
-                        params,
-                        response,
-                        error
-                    }
-                });
-                dispatch({
-                    type: `${apiStatusModelNameSpace}/failure`,
-                    nameSpace,
-                    apiActionName
-                });
-
+                handleFailureResponse(response, error);
             }
 
         }

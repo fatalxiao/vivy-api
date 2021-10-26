@@ -8,7 +8,7 @@ import ApiStatus from '../statics/ApiStatus';
 /**
  * Create apiStatus model
  * @param nameSpace {string}
- * @returns {{reducers: {request: (function(*, {nameSpace: *, apiActionName: *}): *), success: (function(*, {nameSpace: *, apiActionName: *}): *), failure: (function(*, {nameSpace: *, apiActionName: *}): *)}, nameSpace: string, state: {}}}
+ * @returns {Object}
  */
 export default function createApiStatus(nameSpace) {
     return {
@@ -21,7 +21,7 @@ export default function createApiStatus(nameSpace) {
              * @param state {Object}
              * @param nameSpace {string}
              * @param apiActionName {string}
-             * @returns {*}
+             * @returns {Object}
              */
             request: (state, {nameSpace, apiActionName}) => {
                 return {
@@ -38,7 +38,7 @@ export default function createApiStatus(nameSpace) {
              * @param state {Object}
              * @param nameSpace {string}
              * @param apiActionName {string}
-             * @returns {*}
+             * @returns {Object}
              */
             success: (state, {nameSpace, apiActionName}) => {
                 return {
@@ -55,7 +55,7 @@ export default function createApiStatus(nameSpace) {
              * @param state {Object}
              * @param nameSpace {string}
              * @param apiActionName {string}
-             * @returns {*}
+             * @returns {Object}
              */
             failure: (state, {nameSpace, apiActionName}) => {
                 return {

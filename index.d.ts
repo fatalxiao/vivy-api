@@ -1,6 +1,6 @@
 import {Middleware} from 'redux';
 
-import * as ApiStatus from './src/statics/ApiStatus';
+import * as ApiStatus from './dist/statics/ApiStatus';
 
 /**
  * Api status

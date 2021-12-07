@@ -5,6 +5,7 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
 
 // Statics
 import {ApiStatus} from 'vivy-api';
@@ -14,7 +15,7 @@ import './UserList.scss';
 
 const UserList = ({
     data, message, getUserListStatus,
-    dispatch
+    getUserList
 }) => {
 
     /**
@@ -26,14 +27,13 @@ const UserList = ({
      * Query user list by search text
      * @type {(function(): void)|*}
      */
-    const getUserList = useCallback(() => {
-        dispatch?.({
-            type: 'userList/getUserList',
+    const requestUserList = useCallback(() => {
+        getUserList?.({
             searchText
         });
     }, [
         searchText,
-        dispatch
+        getUserList
     ]);
 
     /**
@@ -42,18 +42,18 @@ const UserList = ({
      */
     const handleChange = useCallback(e => {
         setSearchText(e.target.value);
-        getUserList();
+        requestUserList();
     }, [
-        getUserList
+        requestUserList
     ]);
 
     /**
      * Query user list when init
      */
     useEffect(() => {
-        getUserList();
+        requestUserList();
     }, [
-        getUserList
+        requestUserList
     ]);
 
     return (
@@ -97,7 +97,7 @@ UserList.propTypes = {
     message: PropTypes.string,
     getUserListStatus: PropTypes.string,
 
-    dispatch: PropTypes.func
+    getUserList: PropTypes.func
 
 };
 
@@ -110,4 +110,6 @@ export default connect(state => ({
     // get "getUserList" api status from vivy-api model ( default model name space is "apiStatus" )
     getUserListStatus: state.apiStatus?.userList?.getUserList
 
-}))(UserList);
+}), dispatch => bindModelActionCreators({
+    getUserList: 'userList/getUserList'
+}, dispatch))(UserList);

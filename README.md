@@ -55,4 +55,146 @@ $ npm run start
 
 ### Basic usage
 
+index.js
 
+```js
+import React from 'react';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+
+// Import Vivy
+import Vivy, {registerModel} from 'vivy';
+
+// Import Vivy api plugin
+import VivyApi from 'vivy-api';
+
+// Import axios for requesting api
+import axios from 'axios';
+
+// Import sync component and model
+import App from 'path_to_app_component';
+import app from 'path_to_app_model';
+
+// Create vivy
+const vivy = Vivy();
+
+// Apply api plugin
+vivy.use(VivyApi({
+
+    // Customized api status model name space ( default is "apiStatus" )
+    // apiStatusModelNameSpace: 'customizedApiStatus',
+
+    // Customized check response status callback
+    // to tell whether response is successful
+    checkResponseStatus: response => response?.data?.code === 2000,
+
+    // A middleware like callback to handle the success response
+    successResponseHandler: ({dispatch, getState}) => next => action => {
+
+        const {response, successCallback} = action;
+
+        successCallback?.(response);
+
+        next({
+            ...action,
+            responseData: response.data.data
+        });
+
+    },
+
+    // A middleware like callback to handle the failure response
+    failureResponseHandler: ({dispatch, getState}) => next => action => {
+
+        const {response, error, failureCallback} = action;
+
+        // Ignore cancelled request
+        if (axios.isCancel(error)) {
+            return;
+        }
+
+        failureCallback?.(response);
+
+    }
+
+}));
+
+// Create store after configuration
+const store = vivy.createStore();
+
+// Register model to store
+registerModel(store, app);
+
+render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
+    document.getElementById('app-container')
+);
+```
+
+App.js
+
+```js
+import React, {useMemo, useCallback} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {bindModelActionCreators} from 'vivy';
+
+// Statics
+import {ApiStatus} from 'vivy-api';
+
+// Styles
+import './UserList.scss';
+
+const App = ({
+    getDataStatus, getData
+}) => {
+
+    const loading = useMemo(() => {
+        return getDataStatus === ApiStatus.REQUEST
+    }, [
+        getDataStatus
+    ]);
+
+    /**
+     * Get data
+     */
+    const handleClick = useCallback(() => {
+        getData();
+    }, [
+        getData
+    ]);
+
+    return (
+        <button disabled={loading}
+                onClick={handleClick}>
+            {
+                loading ?
+                    'Loading'
+                    :
+                    'Get data'
+            }
+        </button>
+    );
+
+};
+
+App.propTypes = {
+    getDataStatus: PropTypes.string,
+    getData: PropTypes.func
+};
+
+export default connect(state => ({
+    // get "getUserList" api status from vivy-api model
+    getDataStatus: state.apiStatus?.yourVivyModel?.getData
+}), dispatch => bindModelActionCreators({
+    // Define action getData
+    getData: 'yourVivyModel/getData'
+}, dispatch))(App);
+```
+
+app.js
+
+```js
+
+```

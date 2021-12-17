@@ -68,9 +68,6 @@ import Vivy, {registerModel} from 'vivy';
 // Import Vivy api plugin
 import VivyApi from 'vivy-api';
 
-// Import axios for requesting api
-import axios from 'axios';
-
 // Import sync component and model
 import App from 'path_to_app_component';
 import app from 'path_to_app_model';
@@ -90,30 +87,12 @@ vivy.use(VivyApi({
 
     // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
-
-        const {response, successCallback} = action;
-
-        successCallback?.(response);
-
-        next({
-            ...action,
-            responseData: response.data.data
-        });
-
+        // Do something when request successfully.
     },
 
     // A middleware like callback to handle the failure response
     failureResponseHandler: ({dispatch, getState}) => next => action => {
-
-        const {response, error, failureCallback} = action;
-
-        // Ignore cancelled request
-        if (axios.isCancel(error)) {
-            return;
-        }
-
-        failureCallback?.(response);
-
+        // Do something when request failure.
     }
 
 }));
@@ -186,15 +165,51 @@ App.propTypes = {
 
 export default connect(state => ({
     // get "getUserList" api status from vivy-api model
-    getDataStatus: state.apiStatus?.yourVivyModel?.getData
+    getDataStatus: state.apiStatus.app?.getData
 }), dispatch => bindModelActionCreators({
     // Define action getData
-    getData: 'yourVivyModel/getData'
+    getData: 'app/getData'
 }, dispatch))(App);
 ```
 
 app.js
 
 ```js
+export default {
+    nameSpace: 'app',
+    state: null,
+    apis: {
 
+        // Call api to get data
+        getData: () => (dispatchApi, dispatch, getState) => {
+            dispatchApi({
+                api: YOUR_GET_DATA_API,
+                params: {
+                    // Api params
+                },
+                successCallback: () => {
+                    // Do something when request successfully.
+                },
+                failureCallback: () => {
+                    // Do something when request failure.
+                }
+            });
+        }
+
+    },
+    reducers: {
+
+        // These three reducers will be dispatched automatically after response.
+        getDataRequest: (state, payload) => {
+            return null;
+        },
+        getDataSuccess: (state, {responseData}) => {
+            return responseData;
+        },
+        getDataFailure: (state, payload) => {
+            return null;
+        }
+
+    }
+};
 ```

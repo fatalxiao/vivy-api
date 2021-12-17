@@ -164,7 +164,7 @@ App.propTypes = {
 };
 
 export default connect(state => ({
-    // get "getUserList" api status from vivy-api model
+    // get "getData" api status from vivy-api model
     getDataStatus: state.apiStatus.app?.getData
 }), dispatch => bindModelActionCreators({
     // Define action getData

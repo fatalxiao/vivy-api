@@ -2,7 +2,7 @@
     "name": "vivy-api",
     "author": "liangxiaojun",
     "version": "0.3.6",
-    "description": "Vivy api plugin",
+    "description": "A Vivy plugin to handle apis in Vivy model to make api calling easier.",
     "main": "./dist/index.js",
     "files": [
         "src",
@@ -20,8 +20,10 @@
         "url": "https://github.com/fatalxiao/vivy-api"
     },
     "keywords": [
+        "react",
         "redux",
-        "vivy"
+        "vivy",
+        "request-api"
     ],
     "license": "MIT",
     "bugs": {

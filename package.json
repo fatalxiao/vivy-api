@@ -1,7 +1,7 @@
 {
     "name": "vivy-api",
     "author": "liangxiaojun",
-    "version": "0.3.6",
+    "version": "1.0.0",
     "description": "A Vivy plugin to handle apis in Vivy model to make api calling easier.",
     "main": "./dist/index.js",
     "files": [

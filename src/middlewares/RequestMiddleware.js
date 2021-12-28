@@ -30,9 +30,9 @@ export default function createRequestMiddleware(apiStatusModelNameSpace, checkRe
             return next(action);
         }
 
-        const {[CALL_API_PARAMS]: callApiParams, api, params, ...restOptions} = options,
-            {nameSpace, apiActionName, types} = callApiParams,
-            [requestType, successType, failureType] = types;
+        const {[CALL_API_PARAMS]: callApiParams, api, params, ...restOptions} = options;
+        const {nameSpace, apiActionName, types} = callApiParams;
+        const [requestType, successType, failureType] = types;
 
         // Do request action
         next({

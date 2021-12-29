@@ -25,49 +25,29 @@ export default {
         /**
          * Call api to get user list
          * @param searchText
-         * @returns {function(*, *): *}
+         * @returns {(function(*, *, *): void)|*}
          */
-        getUserList: ({searchText}) => (dispatchApi, dispatch) => {
-
-            dispatch({
-                type: 'userList/updateMessage',
-                message: 'Getting user list...'
-            });
-
+        getUserList: ({searchText}) => (dispatchApi, dispatch, getState) => {
             dispatchApi({
                 api: getUserList,
                 params: {
                     searchText
-                },
-                successCallback: () => {
-                    dispatch({
-                        type: 'userList/updateMessage',
-                        message: 'Get user list successfully.'
-                    });
-                },
-                failureCallback: () => {
-                    dispatch({
-                        type: 'userList/updateMessage',
-                        message: 'Get user list failure.'
-                    });
                 }
             });
-
         }
 
     },
     reducers: {
 
         /**
-         * Update customized api message
+         * Handle request user list
          * @param state
-         * @param message
-         * @returns {*&{message}}
+         * @returns {*&{message: string}}
          */
-        updateMessage: (state, {message}) => {
+        getUserListRequest: state => {
             return {
                 ...state,
-                message
+                message: 'Getting user list...'
             };
         },
 
@@ -75,12 +55,26 @@ export default {
          * Handle getting user list successfully
          * @param state
          * @param responseData
-         * @returns {*&{data: *[]}}
+         * @returns {*&{data: *[], message: string}}
          */
         getUserListSuccess: (state, {responseData}) => {
             return {
                 ...state,
+                message: 'Get user list successfully.',
                 data: responseData || []
+            };
+        },
+
+        /**
+         * Handle getting user list failure
+         * @param state
+         * @returns {*&{data: *[], message: string}}
+         */
+        getUserListFailure: state => {
+            return {
+                ...state,
+                message: 'Get user list failure.',
+                data: []
             };
         }
 

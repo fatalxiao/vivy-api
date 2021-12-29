@@ -5,7 +5,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
-import axios from 'axios';
 
 // Import Vivy
 import Vivy, {registerModel} from 'vivy';
@@ -30,7 +29,6 @@ vivy.use(VivyApi({
 
     // Callback before request
     beforeRequest: ({dispatch, getState}) => next => action => {
-        console.log('beforeRequest');
         // You can return false to prevent the request.
         // if (SOME_CONDITION) {
         //     return false;
@@ -39,22 +37,18 @@ vivy.use(VivyApi({
 
     // Callback after request
     onRequest: ({dispatch, getState}) => next => action => {
-        console.log('onRequest');
         // ...
     },
 
     // Callback after response
     onResponse: ({dispatch, getState}) => next => action => {
-        console.log('onResponse');
         // ...
     },
 
     // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
 
-        const {response, successCallback} = action;
-
-        successCallback?.(response);
+        const {response} = action;
 
         next({
             ...action,
@@ -66,14 +60,10 @@ vivy.use(VivyApi({
     // A middleware like callback to handle the failure response
     failureResponseHandler: ({dispatch, getState}) => next => action => {
 
-        const {response, error, failureCallback} = action;
+        const {response, error} = action;
 
-        // Ignore cancelled request
-        if (axios.isCancel(error)) {
-            return;
-        }
-
-        failureCallback?.(response);
+        console.log('response:', response);
+        console.log('error:', error);
 
     }
 

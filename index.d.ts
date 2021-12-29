@@ -7,7 +7,26 @@ import * as ApiStatus from './dist/statics/ApiStatus';
  */
 export {ApiStatus};
 
-export interface VivyApiPluginOption {
+export interface Hooks {
+
+    /**
+     * Callback before request.
+     */
+    beforeRequest?: Middleware,
+
+    /**
+     * Callback after request.
+     */
+    onRequest?: Middleware,
+
+    /**
+     * Callback after response.
+     */
+    onResponse?: Middleware
+
+}
+
+export type VivyApiPluginOption = Hooks & {
 
     /**
      * NameSpace of "apiStatus" Model

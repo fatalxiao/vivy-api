@@ -28,6 +28,27 @@ vivy.use(VivyApi({
     // to tell whether response is successful
     checkResponseStatus: response => response?.data?.code === 2000,
 
+    // Callback before request
+    beforeRequest: ({dispatch, getState}) => next => action => {
+        console.log('beforeRequest');
+        // You can return false to prevent the request.
+        // if (SOME_CONDITION) {
+        //     return false;
+        // }
+    },
+
+    // Callback after request
+    onRequest: ({dispatch, getState}) => next => action => {
+        console.log('onRequest');
+        // ...
+    },
+
+    // Callback after response
+    onResponse: ({dispatch, getState}) => next => action => {
+        console.log('onResponse');
+        // ...
+    },
+
     // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
 

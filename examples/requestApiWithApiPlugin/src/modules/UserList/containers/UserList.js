@@ -42,10 +42,7 @@ const UserList = ({
      */
     const handleChange = useCallback(e => {
         setSearchText(e.target.value);
-        requestUserList();
-    }, [
-        requestUserList
-    ]);
+    }, []);
 
     /**
      * Query user list when init

@@ -19,6 +19,8 @@
 
 A [Vivy][vivy-url] plugin which extend Vivy model to request api more easily.
 
+## Docs
+
 * [Installation](#installation)
 * [Examples](#examples)
     * [Examples in repository](#examples-in-repository)

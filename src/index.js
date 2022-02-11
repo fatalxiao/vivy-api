@@ -6,10 +6,11 @@
 import createApiStatus from './models/apiStatus';
 
 // Middlewares
-import createModelApiActionMiddleware from './middlewares/ModelApiActionMiddleware';
+// import createModelApiActionMiddleware from './middlewares/ModelApiActionMiddleware';
 import createRequestMiddleware from './middlewares/RequestMiddleware';
 import createSuccessResponseMiddleware from './middlewares/SuccessResponseMiddleware';
 import createFailureResponseMiddleware from './middlewares/FailureResponseMiddleware';
+// import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 
 // Statics
 export ApiStatus from './statics/ApiStatus';
@@ -39,11 +40,14 @@ export default function VivyApi(options = {}) {
     } = opts;
 
     // Create ModelApiActionMiddleware
-    const ModelApiActionMiddleware = createModelApiActionMiddleware();
+    // const ModelApiActionMiddleware = createModelApiActionMiddleware();
+
+    // Model api actions
+    const modelApiActions = {};
 
     return {
         extraMiddlewares: [
-            ModelApiActionMiddleware,
+            // ModelApiActionMiddleware,
             createRequestMiddleware(
                 apiStatusModelNameSpace, checkResponseStatus,
                 beforeRequest, onRequest, onResponse
@@ -60,7 +64,10 @@ export default function VivyApi(options = {}) {
 
             // Register api actions
             if (apis) {
-                ModelApiActionMiddleware.register(nameSpace, apis || {});
+                Object.keys(apis).forEach(type =>
+                    modelApiActions[`${nameSpace}/${type}`] = apis[type]
+                );
+                // ModelApiActionMiddleware.register(nameSpace, apis || {});
             }
 
         }

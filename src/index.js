@@ -6,14 +6,16 @@
 import createApiStatus from './models/apiStatus';
 
 // Middlewares
-// import createModelApiActionMiddleware from './middlewares/ModelApiActionMiddleware';
 import createRequestMiddleware from './middlewares/RequestMiddleware';
 import createSuccessResponseMiddleware from './middlewares/SuccessResponseMiddleware';
 import createFailureResponseMiddleware from './middlewares/FailureResponseMiddleware';
-// import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 
 // Statics
 export ApiStatus from './statics/ApiStatus';
+import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
+
+// Vendors
+import {isEmptyObject} from './util/Util';
 
 /**
  * Default vivy-api options
@@ -39,15 +41,8 @@ export default function VivyApi(options = {}) {
         checkResponseStatus, successResponseHandler, failureResponseHandler
     } = opts;
 
-    // Create ModelApiActionMiddleware
-    // const ModelApiActionMiddleware = createModelApiActionMiddleware();
-
-    // Model api actions
-    const modelApiActions = {};
-
     return {
         extraMiddlewares: [
-            // ModelApiActionMiddleware,
             createRequestMiddleware(
                 apiStatusModelNameSpace, checkResponseStatus,
                 beforeRequest, onRequest, onResponse
@@ -58,17 +53,52 @@ export default function VivyApi(options = {}) {
         extraModels: [
             createApiStatus(apiStatusModelNameSpace)
         ],
-        onRegisterModel: model => {
+        onRegisterModel: (model, store) => {
+
+            if (!model || !store) {
+                return;
+            }
 
             const {nameSpace, apis} = model;
 
-            // Register api actions
-            if (apis) {
-                Object.keys(apis).forEach(type =>
-                    modelApiActions[`${nameSpace}/${type}`] = apis[type]
-                );
-                // ModelApiActionMiddleware.register(nameSpace, apis || {});
+            if (!apis || isEmptyObject(apis)) {
+                return;
             }
+
+            if (!store.modelActions[nameSpace]) {
+                store.modelActions[nameSpace] = {};
+            }
+
+            /**
+             * Dispatch an api action
+             * @param type {string}
+             * @returns {(function(*): void)|*}
+             */
+            const dispatchApi = type => apiAction => {
+
+                const [nameSpace, apiActionName] = type.split('/');
+
+                store.dispatch({
+                    [CALL_API]: {
+                        ...apiAction,
+                        [CALL_API_PARAMS]: {
+                            nameSpace,
+                            apiActionName,
+                            types: [
+                                `${type}Request`,
+                                `${type}Success`,
+                                `${type}Failure`
+                            ]
+                        }
+                    }
+                });
+
+            };
+
+            Object.entries(apis).forEach(([name, action]) => {
+                store.modelActions[nameSpace][name] = store.dispatch[nameSpace][name] = params =>
+                    action(params)(dispatchApi, store.dispatch, store.getState);
+            });
 
         }
     };

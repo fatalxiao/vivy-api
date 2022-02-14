@@ -71,34 +71,29 @@ export default function VivyApi(options = {}) {
 
             /**
              * Dispatch an api action
-             * @param type {string}
-             * @returns {(function(*): void)|*}
+             * @param nameSpace
+             * @param apiActionName
+             * @returns {function(*): *}
              */
-            const dispatchApi = type => apiAction => {
-
-                const [nameSpace, apiActionName] = type.split('/');
-
-                store.dispatch({
-                    [CALL_API]: {
-                        ...apiAction,
-                        [CALL_API_PARAMS]: {
-                            nameSpace,
-                            apiActionName,
-                            types: [
-                                `${type}Request`,
-                                `${type}Success`,
-                                `${type}Failure`
-                            ]
-                        }
+            const dispatchApi = (nameSpace, apiActionName) => apiAction => store.dispatch({
+                [CALL_API]: {
+                    ...apiAction,
+                    [CALL_API_PARAMS]: {
+                        nameSpace,
+                        apiActionName,
+                        types: [
+                            `${nameSpace}/${apiActionName}Request`,
+                            `${nameSpace}/${apiActionName}Success`,
+                            `${nameSpace}/${apiActionName}Failure`
+                        ]
                     }
-                });
-
-            };
+                }
+            });
 
             // Register Redux actions
             Object.entries(apis).forEach(([name, api]) => {
                 store.modelActions[nameSpace][name] = store.dispatch[nameSpace][name] = params =>
-                    api(params)(dispatchApi, store.dispatch, store.getState);
+                    api(params)(dispatchApi(nameSpace, name), store.dispatch, store.getState);
             });
 
         }

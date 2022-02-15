@@ -59,6 +59,7 @@ const UserList = ({
             <div className="search">
                 Search:
                 <input value={searchText}
+                       disabled={getUserListStatus === ApiStatus.REQUEST}
                        onChange={handleChange}/>
                 {message}
             </div>

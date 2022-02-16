@@ -69,6 +69,10 @@ export default function VivyApi(options = {}) {
                 store.modelActions[nameSpace] = {};
             }
 
+            if (!store.dispatch[nameSpace]) {
+                store.dispatch[nameSpace] = {};
+            }
+
             /**
              * Dispatch an api action
              * @param nameSpace

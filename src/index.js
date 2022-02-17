@@ -96,7 +96,7 @@ export default function VivyApi(options = {}) {
 
             // Register Redux actions
             Object.entries(apis).forEach(([name, api]) => {
-                store.modelActions[nameSpace][name] = store.dispatch[nameSpace][name] = params =>
+                store.modelActions[nameSpace][name] = store.dispatch[nameSpace][name] = (params = {}) =>
                     api(params)(dispatchApi(nameSpace, name), store.dispatch, store.getState);
             });
 

@@ -12,7 +12,7 @@ import testData from './mocks/testData';
 // Models
 import testModel from './mocks/testModel';
 
-test('Register model', async () => {
+test('Request data', async () => {
 
     const vivy = Vivy();
     vivy.use(VivyApi({
@@ -29,6 +29,10 @@ test('Register model', async () => {
     const store = vivy.createStore();
     store.registerModel(testModel);
 
+    /**
+     * Run test server and request data
+     * @returns {Promise<unknown>}
+     */
     function runTest() {
         return new Promise((resolve, reject) => {
             startServer(() => {

@@ -4,12 +4,12 @@
 
 export default ({dispatch, getState}) => next => action => {
 
-    const {type, value} = action;
+    const {type, callback} = action;
 
-    if (type === 'updateTestModelValue') {
+    if (type === 'getTestModelData') {
         dispatch({
-            type: 'testModel/update',
-            value
+            type: 'testModel/getData',
+            callback
         });
     }
 

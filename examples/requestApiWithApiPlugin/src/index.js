@@ -65,6 +65,8 @@ vivy.use(VivyApi({
         console.log('response:', response);
         console.log('error:', error);
 
+        return next(action);
+
     }
 
 }));

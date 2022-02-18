@@ -101,3 +101,50 @@ test('Request data failure', async () => {
     );
 
 });
+
+test('Request data by chain dispatch', async () => {
+
+    const vivy = Vivy();
+    vivy.use(VivyApi({
+        successResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        },
+        failureResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        }
+    }));
+
+    const store = vivy.createStore();
+    store.registerModel(testModel);
+
+    let server;
+
+    /**
+     * Run test server and request data
+     * @returns {Promise<unknown>}
+     */
+    function runTest() {
+        return new Promise((resolve, reject) => {
+            server = startServer(() => {
+                store.dispatch.testModel.getData({
+                    callback: () => {
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+
+    await runTest();
+
+    server.close();
+
+    expect(
+        store.getState().testModel
+    ).toEqual(
+        testData
+    );
+
+});

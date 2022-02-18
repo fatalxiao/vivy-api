@@ -29,13 +29,15 @@ test('Request data', async () => {
     const store = vivy.createStore();
     store.registerModel(testModel);
 
+    let server;
+
     /**
      * Run test server and request data
      * @returns {Promise<unknown>}
      */
     function runTest() {
         return new Promise((resolve, reject) => {
-            startServer(() => {
+            server = startServer(() => {
                 store.dispatch({
                     type: 'testModel/getData',
                     callback: () => {
@@ -48,10 +50,54 @@ test('Request data', async () => {
 
     await runTest();
 
+    server.close();
+
     expect(
         store.getState().testModel
     ).toEqual(
         testData
+    );
+
+});
+
+test('Request data failure', async () => {
+
+    const vivy = Vivy();
+    vivy.use(VivyApi({
+        successResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        },
+        failureResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        }
+    }));
+
+    const store = vivy.createStore();
+    store.registerModel(testModel);
+
+    /**
+     * Run test server and request data
+     * @returns {Promise<unknown>}
+     */
+    function runTest() {
+        return new Promise((resolve, reject) => {
+            store.dispatch({
+                type: 'testModel/getData',
+                callback: () => {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    await runTest();
+
+    expect(
+        store.getState().testModel
+    ).toEqual(
+        []
     );
 
 });

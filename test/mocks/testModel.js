@@ -2,22 +2,33 @@
  * @file testModel.js
  */
 
+// Apis
+import {getData} from './testApi';
+
 export default {
     nameSpace: 'testModel',
-    state: 0,
+    state: [],
     apis: {
-        get: () => (dispatchApi, dispatch, getState) => {
-
-        }
-    },
-    globalReducers: {
-        globalUpdate: (state, {value}) => {
-            return value;
+        getData: ({callback}) => (dispatchApi, dispatch, getState) => {
+            dispatchApi({
+                api: getData,
+                callback
+            });
         }
     },
     reducers: {
-        update: (state, {value}) => {
-            return value;
+
+        getDataRequest: state => {
+            return state;
+        },
+
+        getDataSuccess: (state, {response}) => {
+            return response?.data || [];
+        },
+
+        getDataFailure: state => {
+            return state;
         }
+
     }
 };

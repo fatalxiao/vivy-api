@@ -12,34 +12,42 @@ import testData from './mocks/testData';
 // Models
 import testModel from './mocks/testModel';
 
-test('Register model', () => {
+test('Register model', async () => {
 
-    startServer(() => {
+    const vivy = Vivy();
+    vivy.use(VivyApi({
+        successResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        },
+        failureResponseHandler: ({dispatch, getState}) => next => action => {
+            action?.callback?.();
+            return next(action);
+        }
+    }));
 
-        const vivy = Vivy();
-        vivy.use(VivyApi({
-            successResponseHandler: ({dispatch, getState}) => next => action => {
-                action?.callback?.();
-            },
-            failureResponseHandler: ({dispatch, getState}) => next => action => {
-                action?.callback?.();
-            }
-        }));
+    const store = vivy.createStore();
+    store.registerModel(testModel);
 
-        const store = vivy.createStore();
-        store.registerModel(testModel);
-
-        store.dispatch({
-            type: 'testModel/getData',
-            callback: () => {
-                expect(
-                    store.getState().testModel
-                ).toEqual(
-                    testData
-                );
-            }
+    function runTest() {
+        return new Promise((resolve, reject) => {
+            startServer(() => {
+                store.dispatch({
+                    type: 'testModel/getData',
+                    callback: () => {
+                        resolve();
+                    }
+                });
+            });
         });
+    }
 
-    });
+    await runTest();
+
+    expect(
+        store.getState().testModel
+    ).toEqual(
+        testData
+    );
 
 });

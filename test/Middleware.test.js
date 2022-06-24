@@ -36,28 +36,20 @@ test('Request data through middleware', async () => {
     const store = vivy.createStore();
     store.registerModel(testModel);
 
-    let server;
-
     /**
      * Run test server and request data
      * @returns {Promise<unknown>}
      */
     function runTest() {
         return new Promise((resolve, reject) => {
-            server = startServer(() => {
-                store.dispatch({
-                    type: 'getTestModelData',
-                    callback: () => {
-                        resolve();
-                    }
-                });
-            });
+            const server = startServer(() => store.dispatch({
+                type: 'getTestModelData',
+                callback: () => server.close(() => resolve())
+            }));
         });
     }
 
     await runTest();
-
-    server.close();
 
     expect(
         store.getState().testModel

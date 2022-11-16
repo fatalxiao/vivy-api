@@ -29,7 +29,7 @@ const DEFAULT_OPTIONS = {
 /**
  * Create Vivy api plugin
  * @param options
- * @returns {{onRegisterModel: onRegisterModel, extraModels: ({reducers: {request: function(Object, {nameSpace: string, apiActionName: string}): {}, success: function(Object, {nameSpace: string, apiActionName: string}): {}, failure: function(Object, {nameSpace: string, apiActionName: string}): {}}, nameSpace, state: {}}|*)[], extraMiddlewares: ((function({dispatch: *}): function(*): function(*=): Promise<*|undefined>)|*|(function({dispatch: *, getState: *}): function(*=): function(*=): *))[]}}
+ * @constructor
  */
 export default function VivyApi(options = {}) {
 

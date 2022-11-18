@@ -74,7 +74,7 @@ test('Request data failure', async () => {
      * @returns {Promise<unknown>}
      */
     function runTest() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             store.dispatch({
                 type: 'testModel/getData',
                 callback: () => {

@@ -45,6 +45,11 @@ vivy.use(VivyApi({
         // ...
     },
 
+    // Callback on error
+    onError: ({dispatch, getState}) => next => action => {
+        // ...
+    },
+
     // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
 

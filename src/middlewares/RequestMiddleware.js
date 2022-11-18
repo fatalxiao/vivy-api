@@ -118,8 +118,14 @@ export default function createRequestMiddleware(
         /**
          * Handle seccess / failure response
          * @param response
+         * @param error
          */
-        function handleResponse(response) {
+        function handleResponse(response, error) {
+
+            if (error) {
+                return handleFailureResponse(response, error);
+            }
+
             if (
                 checkResponseStatus && typeof checkResponseStatus === 'function' ?
                     checkResponseStatus(response)
@@ -128,8 +134,9 @@ export default function createRequestMiddleware(
             ) {
                 handleSuccessResponse(response);
             } else {
-                handleFailureResponse(response);
+                handleFailureResponse(response, error);
             }
+
         }
 
         try {
@@ -139,14 +146,14 @@ export default function createRequestMiddleware(
                 return;
             }
 
-            // Call onRequest
-            handleHook(onRequest);
-
             // Call api and get response
             const response = await api({
                 ...restOptions,
                 params
             });
+
+            // Call onRequest
+            handleHook(onRequest);
 
             // Call onResponse
             handleHook(onResponse, {
@@ -158,9 +165,14 @@ export default function createRequestMiddleware(
 
         } catch (error) {
 
-            // Call onError when error
-            handleHook(onError, {
+            // Call onResponse when error
+            handleHook(onResponse, {
                 response: error?.response,
+                error
+            });
+
+            // Call onResponse when error
+            handleHook(onError, {
                 error
             });
 

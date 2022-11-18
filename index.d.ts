@@ -24,6 +24,11 @@ export interface Hooks {
      */
     onResponse?: Middleware
 
+    /**
+     * Callback on error.
+     */
+    onError?: Middleware
+
 }
 
 export type VivyApiPluginOption = Hooks & {

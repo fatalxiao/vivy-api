@@ -37,7 +37,7 @@ export default function VivyApi(options = {}) {
 
     const {
         apiStatusModelNameSpace,
-        beforeRequest, onRequest, onResponse,
+        beforeRequest, onRequest, onResponse, onError,
         checkResponseStatus, successResponseHandler, failureResponseHandler
     } = opts;
 
@@ -45,7 +45,7 @@ export default function VivyApi(options = {}) {
         extraMiddlewares: [
             createRequestMiddleware(
                 apiStatusModelNameSpace, checkResponseStatus,
-                beforeRequest, onRequest, onResponse
+                beforeRequest, onRequest, onResponse, onError
             ),
             createSuccessResponseMiddleware(successResponseHandler),
             createFailureResponseMiddleware(failureResponseHandler)

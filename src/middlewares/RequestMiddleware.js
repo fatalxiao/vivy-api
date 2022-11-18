@@ -21,11 +21,12 @@ function defaultCheckResponseStatus(response) {
  * @param beforeRequest {Function}
  * @param onRequest {Function}
  * @param onResponse {Function}
+ * @param onError {Function}
  * @returns {function({dispatch: *}): function(*): function(*=): Promise<*|undefined>}
  */
 export default function createRequestMiddleware(
     apiStatusModelNameSpace, checkResponseStatus,
-    beforeRequest, onRequest, onResponse
+    beforeRequest, onRequest, onResponse, onError
 ) {
     return ({dispatch, getState}) => next => async action => {
 
@@ -117,14 +118,8 @@ export default function createRequestMiddleware(
         /**
          * Handle seccess / failure response
          * @param response
-         * @param error
          */
-        function handleResponse(response, error) {
-
-            if (error) {
-                return handleFailureResponse(response, error);
-            }
-
+        function handleResponse(response) {
             if (
                 checkResponseStatus && typeof checkResponseStatus === 'function' ?
                     checkResponseStatus(response)
@@ -133,9 +128,8 @@ export default function createRequestMiddleware(
             ) {
                 handleSuccessResponse(response);
             } else {
-                handleFailureResponse(response, error);
+                handleFailureResponse(response);
             }
-
         }
 
         try {
@@ -145,14 +139,14 @@ export default function createRequestMiddleware(
                 return;
             }
 
+            // Call onRequest
+            handleHook(onRequest);
+
             // Call api and get response
             const response = await api({
                 ...restOptions,
                 params
             });
-
-            // Call onRequest
-            handleHook(onRequest);
 
             // Call onResponse
             handleHook(onResponse, {
@@ -164,8 +158,8 @@ export default function createRequestMiddleware(
 
         } catch (error) {
 
-            // Call onResponse when error
-            handleHook(onResponse, {
+            // Call onError when error
+            handleHook(onError, {
                 response: error?.response,
                 error
             });

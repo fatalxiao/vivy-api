@@ -3,7 +3,7 @@
  */
 
 // Action Types
-import {CALL_API_FAILURE, CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
+import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
 
 /**
  * Create SuccessResponseMiddleware

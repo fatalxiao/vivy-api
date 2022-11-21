@@ -7,15 +7,27 @@ import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 /**
  * Create FailureResponseMiddleware
+ * @param responseHandler {Function}
  * @param failureResponseHandler {Function}
  * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
  */
-export default function createFailureResponseMiddleware(failureResponseHandler) {
+export default function createFailureResponseMiddleware(responseHandler, failureResponseHandler) {
     return ({dispatch, getState}) => next => action => {
 
-        if (failureResponseHandler && typeof failureResponseHandler === 'function'
-            && action?.hasOwnProperty(CALL_API_FAILURE)) {
-            return failureResponseHandler({dispatch, getState})(next)(action[CALL_API_FAILURE]);
+        if (action?.hasOwnProperty(CALL_API_FAILURE)) {
+
+            const nextAction = action[CALL_API_FAILURE];
+
+            if (responseHandler && typeof responseHandler === 'function') {
+                responseHandler({dispatch, getState})(next)(nextAction);
+            }
+
+            if (failureResponseHandler && typeof failureResponseHandler === 'function') {
+                failureResponseHandler({dispatch, getState})(next)(nextAction);
+            }
+
+            return next(nextAction);
+
         }
 
         return next(action);

@@ -7,6 +7,7 @@ import createApiStatus from './models/apiStatus';
 
 // Middlewares
 import createRequestMiddleware from './middlewares/RequestMiddleware';
+import createResponseMiddleware from './middlewares/ResponseMiddleware';
 import createSuccessResponseMiddleware from './middlewares/SuccessResponseMiddleware';
 import createFailureResponseMiddleware from './middlewares/FailureResponseMiddleware';
 
@@ -38,7 +39,7 @@ export default function VivyApi(options = {}) {
     const {
         apiStatusModelNameSpace,
         beforeRequest, onRequest, onResponse, onError,
-        checkResponseStatus, successResponseHandler, failureResponseHandler
+        checkResponseStatus, responseHandler, successResponseHandler, failureResponseHandler
     } = opts;
 
     return {
@@ -47,6 +48,7 @@ export default function VivyApi(options = {}) {
                 apiStatusModelNameSpace, checkResponseStatus,
                 beforeRequest, onRequest, onResponse, onError
             ),
+            createResponseMiddleware(responseHandler),
             createSuccessResponseMiddleware(successResponseHandler),
             createFailureResponseMiddleware(failureResponseHandler)
         ],

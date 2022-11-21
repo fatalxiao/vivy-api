@@ -2,6 +2,7 @@
  * @file FailureResponseMiddleware.js
  */
 
+// Action Types
 import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 /**
@@ -12,10 +13,9 @@ import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 export default function createFailureResponseMiddleware(failureResponseHandler) {
     return ({dispatch, getState}) => next => action => {
 
-        if (action?.hasOwnProperty(CALL_API_FAILURE)) {
-            if (failureResponseHandler && typeof failureResponseHandler === 'function') {
-                return failureResponseHandler({dispatch, getState})(next)(action[CALL_API_FAILURE]);
-            }
+        if (failureResponseHandler && typeof failureResponseHandler === 'function'
+            && action?.hasOwnProperty(CALL_API_FAILURE)) {
+            return failureResponseHandler({dispatch, getState})(next)(action[CALL_API_FAILURE]);
         }
 
         return next(action);

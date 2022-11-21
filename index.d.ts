@@ -44,6 +44,11 @@ export type VivyApiPluginOption = Hooks & {
     checkResponseStatus?: (response?: Object) => boolean,
 
     /**
+     * Handle any kind of response
+     */
+    responseHandler?: Middleware,
+
+    /**
      * Handle success response
      */
     successResponseHandler?: Middleware,

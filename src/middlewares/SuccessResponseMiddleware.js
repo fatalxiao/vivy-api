@@ -13,7 +13,6 @@ import {CALL_API_FAILURE, CALL_API_SUCCESS} from '../actionTypes/CallApiActionTy
  */
 export default function createSuccessResponseMiddleware(responseHandler, successResponseHandler) {
     return ({dispatch, getState}) => next => action => {
-
         if (action?.hasOwnProperty(CALL_API_SUCCESS)) {
 
             const nextAction = action[CALL_API_SUCCESS];
@@ -26,11 +25,8 @@ export default function createSuccessResponseMiddleware(responseHandler, success
                 successResponseHandler({dispatch, getState})(next)(nextAction);
             }
 
-            return next(nextAction);
-
+        } else {
+            next(action);
         }
-
-        return next(action);
-
     };
 }

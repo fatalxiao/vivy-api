@@ -2,7 +2,7 @@
  * @file testMiddleware.js
  */
 
-export default ({dispatch, getState}) => next => action => {
+export default ({dispatch}) => next => action => {
 
     const {type, callback} = action;
 

@@ -16,11 +16,11 @@ test('Request data', async () => {
 
     const vivy = Vivy();
     vivy.use(VivyApi({
-        successResponseHandler: ({dispatch, getState}) => next => action => {
+        successResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         },
-        failureResponseHandler: ({dispatch, getState}) => next => action => {
+        failureResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         }
@@ -34,7 +34,7 @@ test('Request data', async () => {
      * @returns {Promise<unknown>}
      */
     function runTest() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             const server = startServer(() => store.dispatch({
                 type: 'testModel/getData',
                 callback: () => server.close(() => resolve())
@@ -56,11 +56,11 @@ test('Request data failure', async () => {
 
     const vivy = Vivy();
     vivy.use(VivyApi({
-        successResponseHandler: ({dispatch, getState}) => next => action => {
+        successResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         },
-        failureResponseHandler: ({dispatch, getState}) => next => action => {
+        failureResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         }
@@ -98,11 +98,11 @@ test('Request data by chain dispatch', async () => {
 
     const vivy = Vivy();
     vivy.use(VivyApi({
-        successResponseHandler: ({dispatch, getState}) => next => action => {
+        successResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         },
-        failureResponseHandler: ({dispatch, getState}) => next => action => {
+        failureResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         }
@@ -118,7 +118,7 @@ test('Request data by chain dispatch', async () => {
      * @returns {Promise<unknown>}
      */
     function runTest() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             server = startServer(() => {
                 store.dispatch.testModel.getData({
                     callback: () => {
@@ -132,6 +132,42 @@ test('Request data by chain dispatch', async () => {
     await runTest();
 
     server.close();
+
+    expect(
+        store.getState().testModel
+    ).toEqual(
+        testData
+    );
+
+});
+
+test('responseHandler', async () => {
+
+    const vivy = Vivy();
+    vivy.use(VivyApi({
+        responseHandler: () => next => action => {
+            action?.callback?.();
+            return next(action);
+        }
+    }));
+
+    const store = vivy.createStore();
+    store.registerModel(testModel);
+
+    /**
+     * Run test server and request data
+     * @returns {Promise<unknown>}
+     */
+    function runTest() {
+        return new Promise(resolve => {
+            const server = startServer(() => store.dispatch({
+                type: 'testModel/getData',
+                callback: () => server.close(() => resolve())
+            }));
+        });
+    }
+
+    await runTest();
 
     expect(
         store.getState().testModel

@@ -9,7 +9,7 @@ export default {
     nameSpace: 'testModel',
     state: [],
     apis: {
-        getData: ({callback}) => (dispatchApi, dispatch, getState) => {
+        getData: ({callback}) => dispatchApi => {
             dispatchApi({
                 api: getData,
                 callback

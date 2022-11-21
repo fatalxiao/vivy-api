@@ -50,8 +50,24 @@ vivy.use(VivyApi({
         // ...
     },
 
+    // A middleware like callback to handle any kind of response
+    responseHandler: ({dispatch, getState}) => next => action => {
+
+        console.log('responseHandler action:', action);
+
+        const {response} = action;
+
+        next({
+            ...action,
+            responseData: response.data.data
+        });
+
+    },
+
     // A middleware like callback to handle the success response
     successResponseHandler: ({dispatch, getState}) => next => action => {
+
+        console.log('successResponseHandler action:', action);
 
         const {response} = action;
 
@@ -65,10 +81,12 @@ vivy.use(VivyApi({
     // A middleware like callback to handle the failure response
     failureResponseHandler: ({dispatch, getState}) => next => action => {
 
+        console.log('failureResponseHandler action:', action);
+
         const {response, error} = action;
 
-        console.log('response:', response);
-        console.log('error:', error);
+        console.log('failureResponseHandler response:', response);
+        console.log('failureResponseHandler error:', error);
 
         return next(action);
 

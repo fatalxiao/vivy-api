@@ -12,13 +12,11 @@ import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
  */
 export default function createSuccessResponseMiddleware(successResponseHandler) {
     return ({dispatch, getState}) => next => action => {
-
         if (successResponseHandler && typeof successResponseHandler === 'function'
             && action?.hasOwnProperty(CALL_API_SUCCESS)) {
             return successResponseHandler({dispatch, getState})(next)(action[CALL_API_SUCCESS]);
+        } else {
+            return next(action);
         }
-
-        return next(action);
-
     };
 }

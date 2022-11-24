@@ -25,8 +25,6 @@ export default function createFailureResponseMiddleware(responseHandler, failure
                 failureResponseHandler({dispatch, getState})(next)(nextAction);
             }
 
-            next(nextAction);
-
         } else {
             next(action);
         }

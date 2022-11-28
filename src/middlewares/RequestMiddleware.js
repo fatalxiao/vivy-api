@@ -45,6 +45,8 @@ export default function createRequestMiddleware(
         next({
             ...restOptions,
             type: requestType,
+            nameSpace,
+            apiActionName,
             api,
             params
         });
@@ -64,6 +66,8 @@ export default function createRequestMiddleware(
             if (hook && typeof hook === 'function') {
                 return hook({dispatch, getState})(next)({
                     ...restOptions,
+                    nameSpace,
+                    apiActionName,
                     api,
                     params,
                     ...hookAction
@@ -80,6 +84,8 @@ export default function createRequestMiddleware(
                 [CALL_API_SUCCESS]: {
                     ...restOptions,
                     type: successType,
+                    nameSpace,
+                    apiActionName,
                     api,
                     params,
                     response
@@ -102,6 +108,8 @@ export default function createRequestMiddleware(
                 [CALL_API_FAILURE]: {
                     ...restOptions,
                     type: failureType,
+                    nameSpace,
+                    apiActionName,
                     api,
                     params,
                     response,

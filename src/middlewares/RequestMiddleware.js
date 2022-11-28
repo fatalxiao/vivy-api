@@ -154,14 +154,14 @@ export default function createRequestMiddleware(
                 return;
             }
 
+            // Call onRequest
+            handleHook(onRequest);
+
             // Call api and get response
             const response = await api({
                 ...restOptions,
                 params
             });
-
-            // Call onRequest
-            handleHook(onRequest);
 
             // Call onResponse
             handleHook(onResponse, {

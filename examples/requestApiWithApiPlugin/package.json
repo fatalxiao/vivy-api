@@ -7,13 +7,13 @@
         "start": "webpack-dev-server --config webpack.config.js"
     },
     "dependencies": {
-        "axios": "^1.2.0",
+        "axios": "^1.2.1",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-redux": "^8.0.5",
         "vivy": "^2.2.5",
-        "vivy-api": "^2.2.3"
+        "vivy-api": "^2.2.4"
     },
     "devDependencies": {
         "@babel/core": "^7.20.5",
@@ -32,7 +32,7 @@
         "style-loader": "^3.3.1",
         "url-loader": "^4.1.1",
         "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.0",
+        "webpack-cli": "^5.0.1",
         "webpack-dev-server": "^4.11.1",
         "webpack-merge": "^5.8.0"
     }

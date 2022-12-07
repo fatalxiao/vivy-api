@@ -1,11 +1,14 @@
 import {Middleware} from 'redux';
-
-import * as ApiStatus from './dist/statics/ApiStatus';
+import {REQUEST, SUCCESS, FAILURE} from './dist/statics/ApiStatus';
 
 /**
  * Api status
  */
-export {ApiStatus};
+export type ApiStatus = {
+    REQUEST: REQUEST,
+    SUCCESS: SUCCESS,
+    FAILURE: FAILURE
+};
 
 export interface Hooks {
 

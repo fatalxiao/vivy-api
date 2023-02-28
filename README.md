@@ -62,7 +62,7 @@ index.js
 ```js
 import React from 'react';
 import {render} from 'react-dom';
-import {Provider} from 'react-redux';
+import {Provider} from 'react-vivy';
 
 // Import Vivy
 import Vivy, {registerModel} from 'vivy';
@@ -118,7 +118,7 @@ App.js
 ```js
 import React, {useMemo, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {connect} from 'react-vivy';
 import {bindModelActionCreators} from 'vivy';
 
 // Statics

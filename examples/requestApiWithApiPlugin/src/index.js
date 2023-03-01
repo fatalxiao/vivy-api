@@ -11,8 +11,8 @@ import Vivy, {registerModel} from 'vivy';
 import VivyApi from 'vivy-api';
 
 // Sync component and model
-import UserList from './UserList/containers/UserList';
-import userListModel from './UserList/models/userList';
+import UserList from './containers/UserList';
+import userListModel from './models/userList';
 
 // Create vivy
 const vivy = Vivy();

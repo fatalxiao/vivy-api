@@ -3,20 +3,22 @@
  */
 
 import React, {useState, useCallback, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
+import {useModel, useModelState} from 'react-vivy';
 
 // Statics
 import {ApiStatus} from 'vivy-api';
 
-// Styles
-import './UserList.scss';
+const UserList = () => {
 
-const UserList = ({
-    data, message, getUserListStatus,
-    getUserList
-}) => {
+    /**
+     * Get state and reducer from model using hook "useModel".
+     */
+    const [{data, message}, {getUserList}] = useModel('userList');
+
+    /**
+     * get "getUserList" api status from vivy-api model using hook "useModelState".
+     */
+    const {userList: userListStatus} = useModelState('apiStatus');
 
     /**
      * Search text
@@ -37,14 +39,6 @@ const UserList = ({
     ]);
 
     /**
-     * Handle search text change
-     * @type {(function(*): void)|*}
-     */
-    const handleChange = useCallback(e => {
-        setSearchText(e.target.value);
-    }, []);
-
-    /**
      * Query user list when init
      */
     useEffect(() => {
@@ -57,16 +51,16 @@ const UserList = ({
         <div className="user-list">
 
             <div className="search">
-                Search:
+                Search:&nbsp;
                 <input value={searchText}
-                       disabled={getUserListStatus === ApiStatus.REQUEST}
-                       onChange={handleChange}/>
-                {message}
+                       disabled={userListStatus?.getUserListStatus === ApiStatus.REQUEST}
+                       onChange={e => setSearchText(e.target.value)}/>
+                &nbsp;{message}
             </div>
 
             <div className="result">
                 {
-                    getUserListStatus === ApiStatus.REQUEST ?
+                    userListStatus?.getUserListStatus === ApiStatus.REQUEST ?
                         'loading'
                         :
                         data?.length > 0 ?
@@ -89,25 +83,4 @@ const UserList = ({
 
 };
 
-UserList.propTypes = {
-
-    data: PropTypes.array,
-    message: PropTypes.string,
-    getUserListStatus: PropTypes.string,
-
-    getUserList: PropTypes.func
-
-};
-
-export default connect(state => ({
-
-    // get data from userList model
-    data: state.userList.data,
-    message: state.userList.message,
-
-    // get "getUserList" api status from vivy-api model ( default model name space is "apiStatus" )
-    getUserListStatus: state.apiStatus?.userList?.getUserList
-
-}), dispatch => bindModelActionCreators({
-    getUserList: 'userList/getUserList'
-}, dispatch))(UserList);
+export default UserList;

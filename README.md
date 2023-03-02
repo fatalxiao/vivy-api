@@ -116,39 +116,27 @@ render(
 App.js
 
 ```js
-import React, {useMemo, useCallback} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-vivy';
-import {bindModelActionCreators} from 'vivy';
-
-// Statics
-import {ApiStatus} from 'vivy-api';
-
-// Styles
-import './UserList.scss';
+import React from 'react';
+import {useModelActions} from 'react-vivy';
+import {useIsApiRequest} from 'vivy-api';
 
 const App = ({
     getDataStatus, getData
 }) => {
 
-    const loading = useMemo(() => {
-        return getDataStatus === ApiStatus.REQUEST
-    }, [
-        getDataStatus
-    ]);
+    /**
+     * Get api from model using hook "useModelActions".
+     */
+    const {getData} = useModelActions('app');
 
     /**
-     * Get data
+     * Get "getData" api status using hook "useIsApiRequest".
      */
-    const handleClick = useCallback(() => {
-        getData();
-    }, [
-        getData
-    ]);
+    const loading = useIsApiRequest('app/getData');
 
     return (
         <button disabled={loading}
-                onClick={handleClick}>
+                onClick={getData}>
             {
                 loading ?
                     'Loading'
@@ -160,18 +148,7 @@ const App = ({
 
 };
 
-App.propTypes = {
-    getDataStatus: PropTypes.string,
-    getData: PropTypes.func
-};
-
-export default connect(state => ({
-    // get "getData" api status from vivy-api model
-    getDataStatus: state.apiStatus.app?.getData
-}), dispatch => bindModelActionCreators({
-    // Define action getData
-    getData: 'app/getData'
-}, dispatch))(App);
+export default App;
 ```
 
 app.js

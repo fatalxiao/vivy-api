@@ -11,7 +11,7 @@ import createSuccessResponseMiddleware from './middlewares/SuccessResponseMiddle
 import createFailureResponseMiddleware from './middlewares/FailureResponseMiddleware';
 
 // Statics
-export ApiStatus from './statics/ApiStatus';
+import ApiStatus from './statics/ApiStatus';
 import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 
 // Vendors
@@ -30,9 +30,9 @@ const DEFAULT_OPTIONS = {
 let optionApiStatusModelNameSpace;
 
 /**
- * Get apiStatus of api in model
+ * A hook to access the apis status.
  * @param arg
- * @returns {*}
+ * @returns {string|object}
  */
 export function useApiStatus(arg) {
 
@@ -53,6 +53,33 @@ export function useApiStatus(arg) {
         return arg(apiStatuses);
     }
 
+}
+
+/**
+ * A hook to access whether the apis status is request.
+ * @param arg
+ * @returns {boolean}
+ */
+export function useIsApiRequest(arg) {
+    return useApiStatus(arg) === ApiStatus.REQUEST;
+}
+
+/**
+ * A hook to access whether the apis status is success.
+ * @param arg
+ * @returns {boolean}
+ */
+export function useIsApiSuccess(arg) {
+    return useApiStatus(arg) === ApiStatus.SUCCESS;
+}
+
+/**
+ * A hook to access whether the apis status is failure.
+ * @param arg
+ * @returns {boolean}
+ */
+export function useIsApiFailure(arg) {
+    return useApiStatus(arg) === ApiStatus.FAILURE;
 }
 
 /**
@@ -144,3 +171,5 @@ export default function VivyApi(options = {}) {
     };
 
 }
+
+export ApiStatus from './statics/ApiStatus';

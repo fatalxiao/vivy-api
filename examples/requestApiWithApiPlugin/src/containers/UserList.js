@@ -3,10 +3,10 @@
  */
 
 import React, {useState, useCallback, useEffect} from 'react';
-import {useModel, useModelState} from 'react-vivy';
+import {useModel} from 'react-vivy';
 
 // Statics
-import {ApiStatus} from 'vivy-api';
+import {ApiStatus, useApiStatus} from 'vivy-api';
 
 const UserList = () => {
 
@@ -16,9 +16,12 @@ const UserList = () => {
     const [{data, message}, {getUserList}] = useModel('userList');
 
     /**
-     * get "getUserList" api status from vivy-api model using hook "useModelState".
+     * get "getUserList" api status using hook "useApiStatus".
+     *
+     * "useApiStatus" can also accept a function as an argument.
+     * @example const getUserListStatus = useModel(state => state.userList.getUserList);
      */
-    const {userList: userListStatus} = useModelState('apiStatus');
+    const getUserListStatus = useApiStatus('userList/getUserList');
 
     /**
      * Search text
@@ -53,14 +56,14 @@ const UserList = () => {
             <div className="search">
                 Search:&nbsp;
                 <input value={searchText}
-                       disabled={userListStatus?.getUserListStatus === ApiStatus.REQUEST}
+                       disabled={getUserListStatus === ApiStatus.REQUEST}
                        onChange={e => setSearchText(e.target.value)}/>
                 &nbsp;{message}
             </div>
 
             <div className="result">
                 {
-                    userListStatus?.getUserListStatus === ApiStatus.REQUEST ?
+                    getUserListStatus === ApiStatus.REQUEST ?
                         'loading'
                         :
                         data?.length > 0 ?

@@ -59,7 +59,7 @@ vivy.use(VivyApi({
 
         next({
             ...action,
-            responseData: response.data.data
+            responseData: response?.data?.data
         });
 
     },
@@ -73,7 +73,7 @@ vivy.use(VivyApi({
 
         next({
             ...action,
-            responseData: response.data.data
+            responseData: response?.data?.data
         });
 
     },

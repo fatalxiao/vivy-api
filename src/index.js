@@ -16,6 +16,7 @@ import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 
 // Vendors
 import {isEmptyObject} from './util/Util';
+import {useSelector} from 'react-vivy';
 
 /**
  * Default vivy-api options
@@ -25,6 +26,34 @@ const DEFAULT_OPTIONS = {
     apiStatusModelNameSpace: 'apiStatus',
     checkResponseStatus: response => response.status >= 200 && response.status < 300
 };
+
+let optionApiStatusModelNameSpace;
+
+/**
+ * Get apiStatus of api in model
+ * @param arg
+ * @returns {*}
+ */
+export function useApiStatus(arg) {
+
+    const apiStatuses = useSelector(state => state[optionApiStatusModelNameSpace]);
+
+    if (typeof arg === 'string') {
+
+        if (arg.includes('/')) {
+            const [nameSpace, apiName] = arg.split?.('/');
+            return apiStatuses?.[nameSpace]?.[apiName];
+        }
+
+        return apiStatuses?.[arg];
+
+    }
+
+    if (typeof arg === 'function') {
+        return arg(apiStatuses);
+    }
+
+}
 
 /**
  * Create Vivy api plugin
@@ -40,6 +69,8 @@ export default function VivyApi(options = {}) {
         beforeRequest, onRequest, onResponse, onError,
         checkResponseStatus, responseHandler, successResponseHandler, failureResponseHandler
     } = opts;
+
+    optionApiStatusModelNameSpace = apiStatusModelNameSpace;
 
     return {
         extraMiddlewares: [

@@ -129,14 +129,10 @@ const App = ({
     getDataStatus, getData
 }) => {
 
-    /**
-     * Get api from model using hook "useModelActions".
-     */
+    // Get api from model using hook "useModelActions".
     const {getData} = useModelActions('app');
 
-    /**
-     * Get "getData" api status using hook "useIsApiRequest".
-     */
+    // Get "getData" api status using hook "useIsApiRequest".
     const loading = useIsApiRequest('app/getData');
 
     return (

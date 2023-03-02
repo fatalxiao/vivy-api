@@ -30,6 +30,9 @@
     "bugs": {
         "url": "https://github.com/fatalxiao/vivy-api/issues"
     },
+    "dependencies": {
+        "react-vivy": ">=1.x"
+    },
     "devDependencies": {
         "@babel/core": "^7.21.0",
         "@babel/eslint-parser": "^7.19.1",

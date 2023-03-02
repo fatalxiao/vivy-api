@@ -17,6 +17,23 @@ export default function createApiStatus(nameSpace) {
         reducers: {
 
             /**
+             * Init request status
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
+             * @returns {*}
+             */
+            init: (state, {nameSpace, apiActionName}) => {
+                return {
+                    ...state,
+                    [nameSpace]: {
+                        ...state[nameSpace],
+                        [apiActionName]: undefined
+                    }
+                };
+            },
+
+            /**
              * Update request status
              * @param state {Object}
              * @param nameSpace {string}

@@ -64,6 +64,12 @@ export type VivyApiPluginOption = Hooks & {
 }
 
 /**
+ * A hook to access the vivy apis status.
+ * @param arg
+ */
+export function useApiStatus(arg?: string | Function): string | object
+
+/**
  * Create Vivy api plugin instance
  * @param options
  */

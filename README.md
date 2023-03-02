@@ -27,6 +27,11 @@ A [Vivy][vivy-url] plugin which extend Vivy model to request api more easily.
     * [Complete and real project example](#complete-and-real-project-example)
 * [Documentation](#documentation)
     * [Basic usage](#basic-usage)
+    * [Hooks](#hooks)
+        * [useApiStatus](#useApiStatus)
+        * [useIsApiRequest](#useIsApiRequest)
+        * [useIsApiSuccess](#useIsApiSuccess)
+        * [useIsApiFailure](#useIsApiFailure)
 
 ## Installation
 
@@ -191,4 +196,64 @@ export default {
 
     }
 };
+```
+
+### Hooks
+
+#### `useApiStatus`
+
+1. Get specific api status by model name sapce and api name.
+
+```js
+import {useApiStatus} from 'vivy-api';
+
+const apiStatus = useApiStatus('model_name_space/api_name');
+```
+
+2. Get all apis status in a model by model name sapce and api name.
+
+```js
+import {useApiStatus} from 'vivy-api';
+
+const apiStatuses = useApiStatus('model_name_space');
+```
+
+3. Get specific api status by callback function.
+
+```js
+import {useApiStatus} from 'vivy-api';
+
+const apiStatus = useApiStatus(state => state.model_name_space.api_name);
+```
+
+4. Get all apis status in a model by callback function.
+
+```js
+import {useApiStatus} from 'vivy-api';
+
+const apiStatuses = useApiStatus(state => state.model_name_space);
+```
+
+#### `useIsApiRequest`
+
+```js
+import {useIsApiRequest} from 'vivy-api';
+
+const isApiRequest = useIsApiRequest('model_name_space/api_name');
+```
+
+#### `useIsApiSuccess`
+
+```js
+import {useIsApiSuccess} from 'vivy-api';
+
+const isApiSuccess = useIsApiSuccess('model_name_space/api_name');
+```
+
+#### `useIsApiFailure`
+
+```js
+import {useIsApiFailure} from 'vivy-api';
+
+const isApiFailure = useIsApiFailure('model_name_space/api_name');
 ```

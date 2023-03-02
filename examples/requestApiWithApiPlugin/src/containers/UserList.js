@@ -14,7 +14,7 @@ const UserList = () => {
     const [{data, message}, {getUserList}] = useModel('userList');
 
     /**
-     * get "getUserList" api status using hook "useIsApiRequest".
+     * Get "getUserList" api status using hook "useIsApiRequest".
      * @type boolean
      */
     const isGetUserListRequest = useIsApiRequest('userList/getUserList');

@@ -10,7 +10,7 @@
 
 [request-api-with-api-plugin-example-url]: https://github.com/fatalxiao/vivy-api/tree/main/examples/requestApiWithApiPlugin
 
-[pieb-with-dpe-frontend-url]: https://github.com/fatalxiao/pieb-with-dpe-frontend
+[labor-analgesia-frontend-url]: https://github.com/fatalxiao/labor-analgesia-frontend
 
 # vivy-api
 
@@ -56,7 +56,7 @@ $ npm run start
 
 ### Complete and real project example
 
-* [pieb-with-dpe-frontend][pieb-with-dpe-frontend-url]
+* [labor-analgesia-frontend][labor-analgesia-frontend-url]
 
 ## Documentation
 

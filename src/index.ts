@@ -1,5 +1,5 @@
 /**
- * @file index.js
+ * @file index.ts
  */
 
 // Models
@@ -18,25 +18,28 @@ import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
+// Types
+import {VivyApiPluginOption} from "src/types";
+import {AnyAction, VivyModel, VivyStore} from "vivy";
+
 /**
  * Default vivy-api options
  * @type {{checkResponseStatus: (function(*)), apiStatusModelNameSpace: string}}
  */
 const DEFAULT_OPTIONS = {
     apiStatusModelNameSpace: 'apiStatus',
-    checkResponseStatus: response => response.status >= 200 && response.status < 300
+    checkResponseStatus: (response: Response) => response.status >= 200 && response.status < 300
 };
 
-let optionApiStatusModelNameSpace;
+let optionApiStatusModelNameSpace: string;
 
 /**
  * A hook to access the apis status.
  * @param arg
- * @returns {string|object}
  */
-export function useApiStatus(arg) {
+export function useApiStatus(arg: string | ((state: any) => any)): string | undefined {
 
-    const apiStatuses = useSelector(state => state[optionApiStatusModelNameSpace]);
+    const apiStatuses = useSelector(state => state?.[optionApiStatusModelNameSpace]);
 
     if (typeof arg === 'string') {
 
@@ -53,14 +56,15 @@ export function useApiStatus(arg) {
         return arg(apiStatuses);
     }
 
+    return;
+
 }
 
 /**
  * A hook to access whether the apis status is request.
  * @param arg
- * @returns {boolean}
  */
-export function useIsApiRequest(arg) {
+export function useIsApiRequest(arg: string | ((state: any) => any)): boolean {
     return useApiStatus(arg) === ApiStatus.REQUEST;
 }
 
@@ -69,7 +73,7 @@ export function useIsApiRequest(arg) {
  * @param arg
  * @returns {boolean}
  */
-export function useIsApiSuccess(arg) {
+export function useIsApiSuccess(arg: string | ((state: any) => any)): boolean {
     return useApiStatus(arg) === ApiStatus.SUCCESS;
 }
 
@@ -78,7 +82,7 @@ export function useIsApiSuccess(arg) {
  * @param arg
  * @returns {boolean}
  */
-export function useIsApiFailure(arg) {
+export function useIsApiFailure(arg: string | ((state: any) => any)): boolean {
     return useApiStatus(arg) === ApiStatus.FAILURE;
 }
 
@@ -87,7 +91,7 @@ export function useIsApiFailure(arg) {
  * @param options
  * @constructor
  */
-export default function VivyApi(options = {}) {
+export default function VivyApi(options: VivyApiPluginOption = {}) {
 
     const opts = {...DEFAULT_OPTIONS, ...options};
 
@@ -111,7 +115,7 @@ export default function VivyApi(options = {}) {
         extraModels: [
             createApiStatus(apiStatusModelNameSpace)
         ],
-        onRegisterModel: (model, store) => {
+        onRegisterModel: (model: VivyModel, store: VivyStore) => {
 
             if (!model || !store) {
                 return;
@@ -135,9 +139,8 @@ export default function VivyApi(options = {}) {
              * Dispatch an api action
              * @param nameSpace
              * @param apiActionName
-             * @returns {function(*): *}
              */
-            const dispatchApi = (nameSpace, apiActionName) => apiAction => store.dispatch({
+            const dispatchApi = (nameSpace: string, apiActionName: string) => (apiAction: AnyAction) => store.dispatch({
                 [CALL_API]: {
                     ...apiAction,
                     [CALL_API_PARAMS]: {
@@ -157,8 +160,7 @@ export default function VivyApi(options = {}) {
 
                 store.modelActions[nameSpace][apiActionName]
                     = store.dispatch[nameSpace][apiActionName]
-                    = (params = {}) =>
-                    api(params)(dispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
+                    = (params = {}) => api(params)(dispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
 
                 store.dispatch[apiStatusModelNameSpace].init({
                     nameSpace,
@@ -172,4 +174,7 @@ export default function VivyApi(options = {}) {
 
 }
 
-export ApiStatus from './statics/ApiStatus';
+export
+ApiStatus
+from
+'./statics/ApiStatus';

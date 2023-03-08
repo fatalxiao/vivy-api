@@ -1,16 +1,18 @@
 /**
- * @file apiStatus.js
+ * @file apiStatus.ts
  */
 
 // Statics
 import ApiStatus from '../statics/ApiStatus';
 
+// Types
+import {ApiStatusAction} from '../types';
+
 /**
  * Create apiStatus model
- * @param nameSpace {string}
- * @returns {Object}
+ * @param nameSpace
  */
-export default function createApiStatus(nameSpace) {
+export default function createApiStatus(nameSpace: string) {
     return {
         nameSpace: nameSpace || 'apiStatus',
         state: {},
@@ -21,9 +23,8 @@ export default function createApiStatus(nameSpace) {
              * @param state
              * @param nameSpace
              * @param apiActionName
-             * @returns {*}
              */
-            init: (state, {nameSpace, apiActionName}) => {
+            init: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -35,12 +36,11 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update request status
-             * @param state {Object}
-             * @param nameSpace {string}
-             * @param apiActionName {string}
-             * @returns {Object}
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
              */
-            request: (state, {nameSpace, apiActionName}) => {
+            request: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -52,12 +52,11 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update success status
-             * @param state {Object}
-             * @param nameSpace {string}
-             * @param apiActionName {string}
-             * @returns {Object}
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
              */
-            success: (state, {nameSpace, apiActionName}) => {
+            success: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -69,12 +68,11 @@ export default function createApiStatus(nameSpace) {
 
             /**
              * Update failure status
-             * @param state {Object}
-             * @param nameSpace {string}
-             * @param apiActionName {string}
-             * @returns {Object}
+             * @param state
+             * @param nameSpace
+             * @param apiActionName
              */
-            failure: (state, {nameSpace, apiActionName}) => {
+            failure: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
                 return {
                     ...state,
                     [nameSpace]: {

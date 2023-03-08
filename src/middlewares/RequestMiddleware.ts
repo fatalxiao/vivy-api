@@ -1,33 +1,34 @@
 /**
- * @file RequestMiddleware.js
+ * @file RequestMiddleware.ts
  */
 
 // Action Types
 import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
+// Types
+import {Middleware} from 'vivy';
+
 /**
  * Default check respopnse status callback
- * @param response {Object}
- * @returns {boolean}
+ * @param response
  */
-function defaultCheckResponseStatus(response) {
+function defaultCheckResponseStatus(response: Response): boolean {
     return response.status >= 200 && response.status < 300;
 }
 
 /**
  * Create RequestMiddleware
- * @param apiStatusModelNameSpace {string}
- * @param checkResponseStatus {Function}
- * @param beforeRequest {Function}
- * @param onRequest {Function}
- * @param onResponse {Function}
- * @param onError {Function}
- * @returns {function({dispatch: *}): function(*): function(*=): Promise<*|undefined>}
+ * @param apiStatusModelNameSpace
+ * @param checkResponseStatus
+ * @param beforeRequest
+ * @param onRequest
+ * @param onResponse
+ * @param onError
  */
 export default function createRequestMiddleware(
-    apiStatusModelNameSpace, checkResponseStatus,
+    apiStatusModelNameSpace: string, checkResponseStatus: (response: Response) => boolean,
     beforeRequest, onRequest, onResponse, onError
-) {
+): Middleware {
     return ({dispatch, getState}) => next => async action => {
 
         const options = action[CALL_API];

@@ -1,5 +1,5 @@
 /**
- * @file ApiStatus.js
+ * @file ApiStatus.ts
  */
 
 export default {

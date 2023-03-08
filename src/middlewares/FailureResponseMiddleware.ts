@@ -1,17 +1,21 @@
 /**
- * @file FailureResponseMiddleware.js
+ * @file FailureResponseMiddleware.ts
  */
 
 // Action Types
 import {CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
+// Types
+import {Middleware} from 'vivy';
+
 /**
  * Create FailureResponseMiddleware
- * @param responseHandler {Function}
- * @param failureResponseHandler {Function}
- * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
+ * @param responseHandler
+ * @param failureResponseHandler
  */
-export default function createFailureResponseMiddleware(responseHandler, failureResponseHandler) {
+export default function createFailureResponseMiddleware(
+    responseHandler: Middleware, failureResponseHandler: Middleware
+): Middleware {
     return ({dispatch, getState}) => next => action => {
         if (action?.hasOwnProperty(CALL_API_FAILURE)) {
 

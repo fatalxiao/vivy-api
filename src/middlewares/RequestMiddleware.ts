@@ -6,7 +6,7 @@
 import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 // Types
-import {Middleware} from 'vivy';
+import {AnyAction, Middleware} from 'vivy';
 
 /**
  * Default check respopnse status callback
@@ -27,7 +27,7 @@ function defaultCheckResponseStatus(response: Response): boolean {
  */
 export default function createRequestMiddleware(
     apiStatusModelNameSpace: string, checkResponseStatus: (response: Response) => boolean,
-    beforeRequest, onRequest, onResponse, onError
+    beforeRequest: Middleware, onRequest: Middleware, onResponse: Middleware, onError: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => async action => {
 
@@ -61,9 +61,8 @@ export default function createRequestMiddleware(
          * Handle plugin hook.
          * @param hook
          * @param hookAction
-         * @returns {*}
          */
-        function handleHook(hook, hookAction) {
+        function handleHook(hook: Middleware, hookAction: AnyAction) {
             if (hook && typeof hook === 'function') {
                 return hook({dispatch, getState})(next)({
                     ...restOptions,
@@ -80,7 +79,7 @@ export default function createRequestMiddleware(
          * Handle seccess response
          * @param response
          */
-        function handleSuccessResponse(response) {
+        function handleSuccessResponse(response: Response) {
             next({
                 [CALL_API_SUCCESS]: {
                     ...restOptions,

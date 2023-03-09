@@ -1,17 +1,22 @@
 /**
- * @file SuccessResponseMiddleware.js
+ * @file SuccessResponseMiddleware.ts
+ * @author Liangxiaojun
  */
 
 // Action Types
 import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
 
+// Types
+import {Middleware} from "vivy";
+
 /**
  * Create SuccessResponseMiddleware
- * @param responseHandler {Function}
- * @param successResponseHandler {Function}
- * @returns {function({dispatch: *, getState: *}): function(*=): function(*=): (*)}
+ * @param responseHandler
+ * @param successResponseHandler
  */
-export default function createSuccessResponseMiddleware(responseHandler, successResponseHandler) {
+export default function createSuccessResponseMiddleware(
+    responseHandler?: Middleware, successResponseHandler?: Middleware
+): Middleware {
     return ({dispatch, getState}) => next => action => {
         if (action?.hasOwnProperty(CALL_API_SUCCESS)) {
 

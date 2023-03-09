@@ -1,5 +1,6 @@
 /**
  * @file FailureResponseMiddleware.ts
+ * @author Liangxiaojun
  */
 
 // Action Types
@@ -14,7 +15,7 @@ import {Middleware} from 'vivy';
  * @param failureResponseHandler
  */
 export default function createFailureResponseMiddleware(
-    responseHandler: Middleware, failureResponseHandler: Middleware
+    responseHandler?: Middleware, failureResponseHandler?: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => action => {
         if (action?.hasOwnProperty(CALL_API_FAILURE)) {

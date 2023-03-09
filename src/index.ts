@@ -1,5 +1,6 @@
 /**
  * @file index.ts
+ * @author Liangxiaojun
  */
 
 // Models
@@ -11,7 +12,7 @@ import createSuccessResponseMiddleware from './middlewares/SuccessResponseMiddle
 import createFailureResponseMiddleware from './middlewares/FailureResponseMiddleware';
 
 // Statics
-import ApiStatus from './statics/ApiStatus';
+import {ApiStatus} from './statics/ApiStatus';
 import {CALL_API, CALL_API_PARAMS} from './actionTypes/CallApiActionType';
 
 // Vendors
@@ -19,8 +20,8 @@ import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
 // Types
-import {VivyApiPluginOption} from "src/types";
-import {AnyAction, VivyModel, VivyStore} from "vivy";
+import {VivyApiPluginOption, VivyApiModel} from "src/types";
+import {VivyStore} from "vivy";
 
 /**
  * Default vivy-api options
@@ -32,6 +33,8 @@ const DEFAULT_OPTIONS = {
 };
 
 let optionApiStatusModelNameSpace: string;
+
+export {ApiStatus} from './statics/ApiStatus';
 
 /**
  * A hook to access the apis status.
@@ -115,7 +118,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
         extraModels: [
             createApiStatus(apiStatusModelNameSpace)
         ],
-        onRegisterModel: (model: VivyModel, store: VivyStore) => {
+        onRegisterModel: (model: VivyApiModel, store: VivyStore) => {
 
             if (!model || !store) {
                 return;
@@ -140,7 +143,8 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
              * @param nameSpace
              * @param apiActionName
              */
-            const dispatchApi = (nameSpace: string, apiActionName: string) => (apiAction: AnyAction) => store.dispatch({
+            const getDispatchApi = (nameSpace: string, apiActionName: string) => (apiAction: object) => store.dispatch({
+                type: CALL_API,
                 [CALL_API]: {
                     ...apiAction,
                     [CALL_API_PARAMS]: {
@@ -160,7 +164,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
 
                 store.modelActions[nameSpace][apiActionName]
                     = store.dispatch[nameSpace][apiActionName]
-                    = (params = {}) => api(params)(dispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
+                    = (params = {}) => api(params)(getDispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
 
                 store.dispatch[apiStatusModelNameSpace].init({
                     nameSpace,
@@ -173,8 +177,3 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
     };
 
 }
-
-export
-ApiStatus
-from
-'./statics/ApiStatus';

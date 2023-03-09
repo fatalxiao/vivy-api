@@ -1,9 +1,10 @@
 /**
  * @file apiStatus.ts
+ * @author Liangxiaojun
  */
 
 // Statics
-import ApiStatus from '../statics/ApiStatus';
+import {ApiStatus} from '../statics/ApiStatus';
 
 // Types
 import {ApiStatusAction} from '../types';

@@ -1,5 +1,6 @@
 /**
- * @file CallApiActionType.js
+ * @file CallApiActionType.ts
+ * @author Liangxiaojun
  */
 
 export const CALL_API = '@@VIVY/CALL_API';

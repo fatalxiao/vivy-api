@@ -1,8 +1,9 @@
 /**
  * @file ApiStatus.ts
+ * @author Liangxiaojun
  */
 
-export default {
+export const ApiStatus = {
     REQUEST: 'REQUEST',
     SUCCESS: 'SUCCESS',
     FAILURE: 'FAILURE'

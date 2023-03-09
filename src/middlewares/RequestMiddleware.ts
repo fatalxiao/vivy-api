@@ -1,12 +1,13 @@
 /**
  * @file RequestMiddleware.ts
+ * @author Liangxiaojun
  */
 
 // Action Types
 import {CALL_API, CALL_API_PARAMS, CALL_API_SUCCESS, CALL_API_FAILURE} from '../actionTypes/CallApiActionType';
 
 // Types
-import {AnyAction, Middleware} from 'vivy';
+import {Middleware} from 'vivy';
 
 /**
  * Default check respopnse status callback
@@ -27,7 +28,7 @@ function defaultCheckResponseStatus(response: Response): boolean {
  */
 export default function createRequestMiddleware(
     apiStatusModelNameSpace: string, checkResponseStatus: (response: Response) => boolean,
-    beforeRequest: Middleware, onRequest: Middleware, onResponse: Middleware, onError: Middleware
+    beforeRequest?: Middleware, onRequest?: Middleware, onResponse?: Middleware, onError?: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => async action => {
 
@@ -62,7 +63,7 @@ export default function createRequestMiddleware(
          * @param hook
          * @param hookAction
          */
-        function handleHook(hook: Middleware, hookAction: AnyAction) {
+        function handleHook(hook?: Middleware, hookAction?: object) {
             if (hook && typeof hook === 'function') {
                 return hook({dispatch, getState})(next)({
                     ...restOptions,
@@ -81,6 +82,7 @@ export default function createRequestMiddleware(
          */
         function handleSuccessResponse(response: Response) {
             next({
+                type: CALL_API_SUCCESS,
                 [CALL_API_SUCCESS]: {
                     ...restOptions,
                     type: successType,
@@ -103,8 +105,9 @@ export default function createRequestMiddleware(
          * @param response
          * @param error
          */
-        function handleFailureResponse(response, error) {
+        function handleFailureResponse(response: Response, error?: Error) {
             next({
+                type: CALL_API_FAILURE,
                 [CALL_API_FAILURE]: {
                     ...restOptions,
                     type: failureType,
@@ -128,7 +131,7 @@ export default function createRequestMiddleware(
          * @param response
          * @param error
          */
-        function handleResponse(response, error) {
+        function handleResponse(response: Response, error?: Error) {
 
             if (error) {
                 return handleFailureResponse(response, error);
@@ -171,7 +174,7 @@ export default function createRequestMiddleware(
             // Handle response
             handleResponse(response);
 
-        } catch (error) {
+        } catch (error: any) {
 
             // Call onResponse when error
             handleHook(onResponse, {

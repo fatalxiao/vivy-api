@@ -162,9 +162,17 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
             // Register Redux actions
             Object.entries(apis).forEach(([apiActionName, api]) => {
 
+                const apiActionFn = (params = {}) =>
+                    api(params)(getDispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
+
+                apiActionFn.getStatus = () => useApiStatus(`${nameSpace}/${apiActionName}`);
+                apiActionFn.isRequest = () => useIsApiRequest(`${nameSpace}/${apiActionName}`);
+                apiActionFn.isSuccess = () => useIsApiSuccess(`${nameSpace}/${apiActionName}`);
+                apiActionFn.isFailure = () => useIsApiFailure(`${nameSpace}/${apiActionName}`);
+
                 store.modelActions[nameSpace][apiActionName]
                     = store.dispatch[nameSpace][apiActionName]
-                    = (params = {}) => api(params)(getDispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
+                    = apiActionFn;
 
                 store.dispatch[apiStatusModelNameSpace].init({
                     nameSpace,

@@ -4,6 +4,7 @@
 
 import React, {useState, useCallback, useEffect} from 'react';
 import {useModel} from 'react-vivy';
+import {useStatus, useIsRequest, useIsSuccess, useIsFailure} from 'vivy-api';
 
 const UserList = () => {
 
@@ -12,15 +13,15 @@ const UserList = () => {
      */
     const [{data, message}, {getUserList}] = useModel('userList');
 
-    console.log('getUserList.getStatus()::', getUserList.getStatus());
-    console.log('getUserList.isRequest()::', getUserList.isRequest());
-    console.log('getUserList.isSuccess()::', getUserList.isSuccess());
-    console.log('getUserList.isFailure()::', getUserList.isFailure());
+    console.log('useStatus(getUserList)::', useStatus(getUserList));
+    console.log('useIsRequest(getUserList)::', useIsRequest(getUserList));
+    console.log('useIsSuccess(getUserList)::', useIsSuccess(getUserList));
+    console.log('useIsFailure(getUserList)::', useIsFailure(getUserList));
 
     /**
      * Get "getUserList" api status using "ApiAction.isRequest()".
      */
-    const isGetUserListRequest = getUserList.isRequest();
+    const isGetUserListRequest = useIsRequest(getUserList);
 
     /**
      * Or you can get "getUserList" api status using hook "useIsApiRequest".

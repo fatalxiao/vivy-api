@@ -91,6 +91,38 @@ export function useIsApiFailure(arg: string | ((state: any) => any)): boolean {
 }
 
 /**
+ * A hook to access the apis status.
+ * @param api
+ */
+export function useStatus(api: VivyApiFunction): string | undefined {
+    return api?.getStatus();
+}
+
+/**
+ * A hook to access whether the apis status is request.
+ * @param api
+ */
+export function useIsRequest(api: VivyApiFunction): boolean {
+    return api?.isRequest();
+}
+
+/**
+ * A hook to access whether the apis status is success.
+ * @param api
+ */
+export function useIsSuccess(api: VivyApiFunction): boolean {
+    return api?.isSuccess();
+}
+
+/**
+ * A hook to access whether the apis status is failure.
+ * @param api
+ */
+export function useIsFailure(api: VivyApiFunction): boolean {
+    return api?.isFailure();
+}
+
+/**
  * Create Vivy api plugin
  * @param options
  * @constructor

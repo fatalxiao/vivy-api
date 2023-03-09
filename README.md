@@ -33,6 +33,10 @@ A [Vivy][vivy-url] plugin which extend Vivy model to request api more easily.
         * [isSuccess](#isSuccess)
         * [isFailure](#isFailure)
     * [Hooks](#hooks)
+        * [useStatus](#useStatus)
+        * [useIsRequest](#useIsRequest)
+        * [useIsSuccess](#useIsSuccess)
+        * [useIsFailure](#useIsFailure)
         * [useApiStatus](#useApiStatus)
         * [useIsApiRequest](#useIsApiRequest)
         * [useIsApiSuccess](#useIsApiSuccess)
@@ -243,6 +247,46 @@ const isGetDataFailure = getData.isFailure();
 ```
 
 ### Hooks
+
+#### `useStatus`
+
+```js
+import {useModelActions} from 'react-vivy';
+import {useStatus} from 'vivy-api';
+
+const {getData} = useModelActions('app');
+const status = useStatus(getData);
+```
+
+#### `useIsRequest`
+
+```js
+import {useModelActions} from 'react-vivy';
+import {useIsRequest} from 'vivy-api';
+
+const {getData} = useModelActions('app');
+const isRequest = useIsRequest(getData);
+```
+
+#### `useIsSuccess`
+
+```js
+import {useModelActions} from 'react-vivy';
+import {useIsSuccess} from 'vivy-api';
+
+const {getData} = useModelActions('app');
+const isSuccess = useIsSuccess(getData);
+```
+
+#### `useIsFailure`
+
+```js
+import {useModelActions} from 'react-vivy';
+import {useIsFailure} from 'vivy-api';
+
+const {getData} = useModelActions('app');
+const isFailure = useIsFailure(getData);
+```
 
 #### `useApiStatus`
 

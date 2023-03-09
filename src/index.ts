@@ -35,6 +35,7 @@ const DEFAULT_OPTIONS = {
 let optionApiStatusModelNameSpace: string;
 
 export {ApiStatus} from './statics/ApiStatus';
+export * from './types';
 
 /**
  * A hook to access the apis status.

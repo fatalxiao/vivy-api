@@ -27,6 +27,11 @@ A [Vivy][vivy-url] plugin which extend Vivy model to request api more easily.
     * [Complete and real project example](#complete-and-real-project-example)
 * [Documentation](#documentation)
     * [Basic usage](#basic-usage)
+    * [Model api methods](#model-api-methods)
+        * [getStatus](#getStatus)
+        * [isRequest](#isRequest)
+        * [isSuccess](#isSuccess)
+        * [isFailure](#isFailure)
     * [Hooks](#hooks)
         * [useApiStatus](#useApiStatus)
         * [useIsApiRequest](#useIsApiRequest)
@@ -123,7 +128,6 @@ App.js
 ```js
 import React from 'react';
 import {useModelActions} from 'react-vivy';
-import {useIsApiRequest} from 'vivy-api';
 
 const App = ({
     getDataStatus, getData
@@ -132,8 +136,12 @@ const App = ({
     // Get api from model using hook "useModelActions".
     const {getData} = useModelActions('app');
 
-    // Get "getData" api status using hook "useIsApiRequest".
-    const loading = useIsApiRequest('app/getData');
+    // Get loading using "isRequest".
+    const loading = getData.isRequest();
+
+    // Or you can get "getData" api status using hook "useIsApiRequest".
+    // import {useIsApiRequest} from 'vivy-api';
+    // const loading = useIsApiRequest('app/getData');
 
     return (
         <button disabled={loading}
@@ -192,6 +200,46 @@ export default {
 
     }
 };
+```
+
+### Model api methods
+
+#### `getStatus`
+
+```js
+import {useModelActions} from 'react-vivy';
+
+const {getData} = useModelActions('app');
+
+// "REQUEST" / "SUCCESS" / "FAILURE"
+const apiStatus = getData.getStatus();
+```
+
+#### `isRequest`
+
+```js
+import {useModelActions} from 'react-vivy';
+
+const {getData} = useModelActions('app');
+const isGettingData = getData.isRequest();
+```
+
+#### `isSuccess`
+
+```js
+import {useModelActions} from 'react-vivy';
+
+const {getData} = useModelActions('app');
+const isGetDataSuccess = getData.isSuccess();
+```
+
+#### `isFailure`
+
+```js
+import {useModelActions} from 'react-vivy';
+
+const {getData} = useModelActions('app');
+const isGetDataFailure = getData.isFailure();
 ```
 
 ### Hooks

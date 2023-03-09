@@ -20,7 +20,7 @@ import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
 // Types
-import {VivyApiPluginOption, VivyApiModel} from "src/types";
+import {VivyApiPluginOption, VivyApiModel, VivyApiFunction} from "src/types";
 import {VivyStore} from "vivy";
 
 /**
@@ -163,7 +163,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
             // Register Redux actions
             Object.entries(apis).forEach(([apiActionName, api]) => {
 
-                const apiActionFn = (params = {}) =>
+                const apiActionFn: VivyApiFunction = (params = {}) =>
                     api(params)(getDispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);
 
                 apiActionFn.getStatus = () => useApiStatus(`${nameSpace}/${apiActionName}`);

@@ -3,7 +3,7 @@
  * @author Liangxiaojun
  */
 
-import {AnyAction, Middleware, VivyModel, VivyStoreDispatch} from "vivy";
+import {AnyAction, Middleware, VivyModel, VivyStoreDispatch, ModelActionCreatorFunction} from "vivy";
 
 export interface ApiStatusAction extends AnyAction {
     nameSpace: string,
@@ -68,9 +68,16 @@ export type VivyApi = (params?: object) => (
 ) => void;
 
 export interface VivyApiMapObject {
-    [apiName: string]: VivyApi
+    [apiName: string]: VivyApi;
 }
 
 export interface VivyApiModel extends VivyModel {
-    apis: VivyApiMapObject
+    apis: VivyApiMapObject;
+}
+
+export interface VivyApiFunction extends ModelActionCreatorFunction {
+    getStatus: () => string | undefined;
+    isRequest: () => boolean;
+    isSuccess: () => boolean;
+    isFailure: () => boolean;
 }

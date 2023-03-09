@@ -81,3 +81,7 @@ export interface VivyApiFunction extends ModelActionCreatorFunction {
     isSuccess: () => boolean;
     isFailure: () => boolean;
 }
+
+export interface VivyApiFunctionMapObject {
+    [key: string]: ModelActionCreatorFunction;
+}

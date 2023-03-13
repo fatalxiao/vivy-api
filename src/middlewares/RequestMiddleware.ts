@@ -27,7 +27,7 @@ function defaultCheckResponseStatus(response: Response): boolean {
  * @param onError
  */
 export default function createRequestMiddleware(
-    apiStatusModelNameSpace: string, checkResponseStatus: (response: Response) => boolean,
+    apiStatusModelNameSpace: string, checkResponseStatus: (response: Response | any) => boolean,
     beforeRequest?: Middleware, onRequest?: Middleware, onResponse?: Middleware, onError?: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => async action => {
@@ -80,7 +80,7 @@ export default function createRequestMiddleware(
          * Handle seccess response
          * @param response
          */
-        function handleSuccessResponse(response: Response) {
+        function handleSuccessResponse(response: Response | any) {
             next({
                 type: CALL_API_SUCCESS,
                 [CALL_API_SUCCESS]: {
@@ -105,7 +105,7 @@ export default function createRequestMiddleware(
          * @param response
          * @param error
          */
-        function handleFailureResponse(response: Response, error?: Error) {
+        function handleFailureResponse(response: Response | any, error?: Error) {
             next({
                 type: CALL_API_FAILURE,
                 [CALL_API_FAILURE]: {
@@ -131,7 +131,7 @@ export default function createRequestMiddleware(
          * @param response
          * @param error
          */
-        function handleResponse(response: Response, error?: Error) {
+        function handleResponse(response: Response | any, error?: Error) {
 
             if (error) {
                 return handleFailureResponse(response, error);

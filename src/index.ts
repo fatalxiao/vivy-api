@@ -25,7 +25,6 @@ import {VivyPlugin, VivyStoreDispatchAction} from "vivy";
 
 /**
  * Default vivy-api options
- * @type {{checkResponseStatus: (function(*)), apiStatusModelNameSpace: string}}
  */
 const DEFAULT_OPTIONS = {
     apiStatusModelNameSpace: 'apiStatus',

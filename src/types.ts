@@ -39,7 +39,7 @@ export type VivyApiPluginOption = Hooks & {
     /**
      * Check response to differ whether the response is successful
      */
-    checkResponseStatus?: (response?: Response) => boolean,
+    checkResponseStatus?: (response?: Response | any) => boolean,
 
     /**
      * Handle any kind of response

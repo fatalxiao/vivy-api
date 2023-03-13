@@ -3,12 +3,7 @@
  * @author Liangxiaojun
  */
 
-import {AnyAction, Middleware, VivyModel, VivyStoreDispatch, ModelActionCreatorFunction} from "vivy";
-
-export interface ApiStatusAction extends AnyAction {
-    nameSpace: string,
-    apiActionName: string,
-}
+import {Middleware, VivyModel, VivyStoreDispatch, ModelActionCreatorFunction} from "vivy";
 
 export interface Hooks {
 

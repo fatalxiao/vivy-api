@@ -7,13 +7,13 @@
 import {ApiStatus} from '../statics/ApiStatus';
 
 // Types
-import {ApiStatusAction} from '../types';
+import {VivyModel} from "vivy";
 
 /**
  * Create apiStatus model
  * @param nameSpace
  */
-export default function createApiStatus(nameSpace: string) {
+export default function createApiStatus(nameSpace: string): VivyModel {
     return {
         nameSpace: nameSpace || 'apiStatus',
         state: {},
@@ -25,7 +25,7 @@ export default function createApiStatus(nameSpace: string) {
              * @param nameSpace
              * @param apiActionName
              */
-            init: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
+            init: (state: object, {nameSpace, apiActionName}) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -41,7 +41,7 @@ export default function createApiStatus(nameSpace: string) {
              * @param nameSpace
              * @param apiActionName
              */
-            request: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
+            request: (state: object, {nameSpace, apiActionName}) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -57,7 +57,7 @@ export default function createApiStatus(nameSpace: string) {
              * @param nameSpace
              * @param apiActionName
              */
-            success: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
+            success: (state: object, {nameSpace, apiActionName}) => {
                 return {
                     ...state,
                     [nameSpace]: {
@@ -73,7 +73,7 @@ export default function createApiStatus(nameSpace: string) {
              * @param nameSpace
              * @param apiActionName
              */
-            failure: (state: object, {nameSpace, apiActionName}: ApiStatusAction) => {
+            failure: (state: object, {nameSpace, apiActionName}) => {
                 return {
                     ...state,
                     [nameSpace]: {

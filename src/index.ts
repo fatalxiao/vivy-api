@@ -20,8 +20,8 @@ import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
 // Types
-import {VivyApiPluginOption, VivyApiModel, VivyApiFunction} from "src/types";
-import {VivyStore} from "vivy";
+import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject} from "./types";
+import {VivyPlugin, VivyStoreDispatchAction} from "vivy";
 
 /**
  * Default vivy-api options
@@ -127,7 +127,7 @@ export function useIsFailure(api: VivyApiFunction): boolean {
  * @param options
  * @constructor
  */
-export default function VivyApi(options: VivyApiPluginOption = {}) {
+export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
 
     const opts = {...DEFAULT_OPTIONS, ...options};
 
@@ -151,7 +151,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
         extraModels: [
             createApiStatus(apiStatusModelNameSpace)
         ],
-        onRegisterModel: (model: VivyApiModel, store: VivyStore) => {
+        onRegisterModel: (model, store) => {
 
             if (!model || !store) {
                 return;
@@ -168,7 +168,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
             }
 
             if (!store.dispatch[nameSpace]) {
-                store.dispatch[nameSpace] = {};
+                store.dispatch[nameSpace] = <VivyStoreDispatchAction>{};
             }
 
             /**
@@ -193,7 +193,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}) {
             });
 
             // Register Redux actions
-            Object.entries(apis).forEach(([apiActionName, api]) => {
+            Object.entries(apis as VivyApiMapObject).forEach(([apiActionName, api]) => {
 
                 const apiActionFn: VivyApiFunction = (params = {}) =>
                     api(params)(getDispatchApi(nameSpace, apiActionName), store.dispatch, store.getState);

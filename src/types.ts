@@ -58,8 +58,12 @@ export type VivyApiPluginOption = Hooks & {
 
 }
 
-export type VivyApi = (params?: object) => (
-    dispatchApi: (apiAction: object) => any, dispatch: VivyStoreDispatch, getState: () => any
+export type VivyApi = (
+    params?: any
+) => (
+    dispatchApi: (apiAction: object) => any,
+    dispatch: VivyStoreDispatch,
+    getState: () => any
 ) => void;
 
 export interface VivyApiMapObject {

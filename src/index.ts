@@ -20,7 +20,7 @@ import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
 // Types
-import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject} from "./types";
+import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject, ApiAction} from "./types";
 import {VivyPlugin, VivyStoreDispatchAction} from "vivy";
 
 /**
@@ -175,7 +175,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
              * @param nameSpace
              * @param apiActionName
              */
-            const getDispatchApi = (nameSpace: string, apiActionName: string) => (apiAction: object) => store.dispatch({
+            const getDispatchApi = (nameSpace: string, apiActionName: string) => (apiAction: ApiAction) => store.dispatch({
                 type: CALL_API,
                 [CALL_API]: {
                     ...apiAction,

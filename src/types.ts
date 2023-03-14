@@ -83,7 +83,7 @@ export interface VivyApiMapObject {
     [apiName: string]: VivyApi;
 }
 
-export interface VivyApiModel extends VivyModel {
+export interface VivyApiModel extends VivyModel<any> {
     apis?: VivyApiMapObject;
 }
 

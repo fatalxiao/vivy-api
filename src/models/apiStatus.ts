@@ -13,7 +13,7 @@ import {VivyModel} from "vivy";
  * Create apiStatus model
  * @param nameSpace
  */
-export default function createApiStatus(nameSpace: string): VivyModel {
+export default function createApiStatus(nameSpace: string): VivyModel<object> {
     return {
         nameSpace: nameSpace || 'apiStatus',
         state: {},

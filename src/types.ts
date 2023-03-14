@@ -84,7 +84,7 @@ export interface VivyApiMapObject {
 }
 
 export interface VivyApiModel extends VivyModel {
-    apis: VivyApiMapObject;
+    apis?: VivyApiMapObject;
 }
 
 export interface VivyApiFunction extends ModelActionCreatorFunction {

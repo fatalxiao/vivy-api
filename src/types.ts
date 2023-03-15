@@ -3,7 +3,7 @@
  * @author Liangxiaojun
  */
 
-import {Middleware, VivyModel, VivyStoreDispatch, ModelActionCreatorFunction} from "vivy";
+import {Middleware, VivyModel, VivyStoreDispatch, ModelActionCreatorFunction} from 'vivy';
 
 export interface Hooks {
 

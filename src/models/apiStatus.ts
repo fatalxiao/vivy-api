@@ -7,7 +7,7 @@
 import {ApiStatus} from '../statics/ApiStatus';
 
 // Types
-import {VivyModel} from "vivy";
+import {VivyModel} from 'vivy';
 
 /**
  * Create apiStatus model

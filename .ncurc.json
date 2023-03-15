@@ -1,6 +1,10 @@
 {
     "upgrade": true,
     "reject": [
-        "react-vivy"
+        "react-vivy",
+        "@types/react",
+        "@types/react-dom",
+        "react",
+        "react-dom"
     ]
 }

@@ -20,8 +20,8 @@ import {isEmptyObject} from './util/Util';
 import {useSelector} from 'react-vivy';
 
 // Types
-import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject, ApiAction} from "./types";
-import {VivyPlugin, VivyStoreDispatchAction} from "vivy";
+import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject, ApiAction} from './types';
+import {VivyPlugin, VivyStoreDispatchAction} from 'vivy';
 
 /**
  * Default vivy-api options
@@ -46,9 +46,12 @@ export function useApiStatus(arg: string | ((state: any) => any)): string | unde
 
     if (typeof arg === 'string') {
 
-        if (arg.includes('/')) {
-            const [nameSpace, apiName] = arg.split?.('/');
-            return apiStatuses?.[nameSpace]?.[apiName];
+        if (arg?.includes('/')) {
+            const result = arg?.split?.('/');
+            if (result) {
+                const [nameSpace, apiName] = result;
+                return apiStatuses?.[nameSpace]?.[apiName];
+            }
         }
 
         return apiStatuses?.[arg];

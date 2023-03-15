@@ -7,7 +7,7 @@
 import {CALL_API_SUCCESS} from '../actionTypes/CallApiActionType';
 
 // Types
-import {Middleware} from "vivy";
+import {Middleware} from 'vivy';
 
 /**
  * Create SuccessResponseMiddleware

@@ -22,6 +22,7 @@ import {useSelector} from 'react-vivy';
 // Types
 import {VivyApiPluginOption, VivyApiFunction, VivyApiMapObject, ApiAction} from './types';
 import {VivyPlugin, VivyStoreDispatchAction} from 'vivy';
+import {Dispatcher} from 'react-vivy';
 
 /**
  * Default vivy-api options
@@ -96,7 +97,7 @@ export function useIsApiFailure(arg: string | ((state: any) => any)): boolean {
  * A hook to access the apis status.
  * @param api
  */
-export function useStatus(api: VivyApiFunction): string | undefined {
+export function useStatus(api: Dispatcher): string | undefined {
     return api?.getStatus();
 }
 
@@ -104,7 +105,7 @@ export function useStatus(api: VivyApiFunction): string | undefined {
  * A hook to access whether the apis status is request.
  * @param api
  */
-export function useIsRequest(api: VivyApiFunction): boolean {
+export function useIsRequest(api: Dispatcher): boolean {
     return api?.isRequest();
 }
 
@@ -112,7 +113,7 @@ export function useIsRequest(api: VivyApiFunction): boolean {
  * A hook to access whether the apis status is success.
  * @param api
  */
-export function useIsSuccess(api: VivyApiFunction): boolean {
+export function useIsSuccess(api: Dispatcher): boolean {
     return api?.isSuccess();
 }
 
@@ -120,7 +121,7 @@ export function useIsSuccess(api: VivyApiFunction): boolean {
  * A hook to access whether the apis status is failure.
  * @param api
  */
-export function useIsFailure(api: VivyApiFunction): boolean {
+export function useIsFailure(api: Dispatcher): boolean {
     return api?.isFailure();
 }
 

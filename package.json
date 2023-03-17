@@ -58,7 +58,7 @@
         "react": ">=16.8.x",
         "react-dom": ">=16.8.x",
         "rimraf": "^4.4.0",
-        "typescript": "^4.9.5",
-        "vivy": "^3.2.0"
+        "typescript": "^5.0.2",
+        "vivy": "^3.2.1"
     }
 }

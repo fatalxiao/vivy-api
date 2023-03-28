@@ -1,5 +1,5 @@
 /**
- * @file testServer.js
+ * @file testServer.ts
  */
 
 import express from 'express';

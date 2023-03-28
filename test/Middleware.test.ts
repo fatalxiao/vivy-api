@@ -23,11 +23,11 @@ test('Request data through middleware', async () => {
         ]
     });
     vivy.use(VivyApi({
-        successResponseHandler: ({dispatch, getState}) => next => action => {
+        successResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         },
-        failureResponseHandler: ({dispatch, getState}) => next => action => {
+        failureResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         }
@@ -41,10 +41,10 @@ test('Request data through middleware', async () => {
      * @returns {Promise<unknown>}
      */
     function runTest() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             const server = startServer(() => store.dispatch({
                 type: 'getTestModelData',
-                callback: () => server.close(() => resolve())
+                callback: () => server.close(() => resolve(undefined))
             }));
         });
     }
@@ -67,11 +67,11 @@ test('Request data failure through middleware', async () => {
         ]
     });
     vivy.use(VivyApi({
-        successResponseHandler: ({dispatch, getState}) => next => action => {
+        successResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         },
-        failureResponseHandler: ({dispatch, getState}) => next => action => {
+        failureResponseHandler: () => next => action => {
             action?.callback?.();
             return next(action);
         }
@@ -85,11 +85,11 @@ test('Request data failure through middleware', async () => {
      * @returns {Promise<unknown>}
      */
     function runTest() {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             store.dispatch({
                 type: 'getTestModelData',
                 callback: () => {
-                    resolve();
+                    resolve(undefined);
                 }
             });
         });

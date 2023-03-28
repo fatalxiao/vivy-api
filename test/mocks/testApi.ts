@@ -1,5 +1,5 @@
 /**
- * @file testApi.js
+ * @file testApi.ts
  */
 
 import axios from 'axios';

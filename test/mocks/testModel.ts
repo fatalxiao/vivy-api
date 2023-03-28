@@ -1,11 +1,12 @@
 /**
- * @file testModel.js
+ * @file testModel.ts
  */
 
 // Apis
 import {getData} from './testApi';
+import {VivyModel} from 'vivy';
 
-export default {
+export default <VivyModel<any[]>>{
     nameSpace: 'testModel',
     state: [],
     apis: {

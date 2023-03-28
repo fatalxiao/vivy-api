@@ -1,5 +1,5 @@
 /**
- * @file testMiddleware.js
+ * @file testMiddleware.ts
  */
 
 export default ({dispatch}) => next => action => {

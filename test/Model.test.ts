@@ -37,7 +37,7 @@ test('Request data', async () => {
         return new Promise(resolve => {
             const server = startServer(() => store.dispatch({
                 type: 'testModel/getData',
-                callback: () => server.close(() => resolve())
+                callback: () => server.close(() => resolve(undefined))
             }));
         });
     }
@@ -77,9 +77,7 @@ test('Request data failure', async () => {
         return new Promise(resolve => {
             store.dispatch({
                 type: 'testModel/getData',
-                callback: () => {
-                    resolve();
-                }
+                callback: () => resolve(undefined)
             });
         });
     }
@@ -121,9 +119,7 @@ test('Request data by chain dispatch', async () => {
         return new Promise(resolve => {
             server = startServer(() => {
                 store.dispatch.testModel.getData({
-                    callback: () => {
-                        resolve();
-                    }
+                    callback: () => resolve(undefined)
                 });
             });
         });
@@ -162,7 +158,7 @@ test('responseHandler', async () => {
         return new Promise(resolve => {
             const server = startServer(() => store.dispatch({
                 type: 'testModel/getData',
-                callback: () => server.close(() => resolve())
+                callback: () => server.close(() => resolve(undefined))
             }));
         });
     }

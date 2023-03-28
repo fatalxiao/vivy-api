@@ -16,6 +16,7 @@
         "noImplicitAny": false,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
+        "esModuleInterop": true,
         "baseUrl": ".",
         "paths": {
             "src/*": [
@@ -24,7 +25,8 @@
         }
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "test/**/*"
     ],
     "exclude": [
         "node_modules"

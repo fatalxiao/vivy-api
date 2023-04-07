@@ -67,8 +67,12 @@ export interface ApiOptions {
 }
 
 export interface ApiAction {
+
     api: (apiOptions: ApiOptions) => Promise<any>;
     params?: any;
+
+    [extraAction: string]: any;
+
 }
 
 export type VivyApi = (

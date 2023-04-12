@@ -98,7 +98,7 @@ export function useIsApiFailure(arg: string | ((state: any) => any)): boolean {
  * @param api
  */
 export function useStatus(api: Dispatcher): string | undefined {
-    return api?.getStatus();
+    return api?.getStatus?.();
 }
 
 /**
@@ -106,7 +106,7 @@ export function useStatus(api: Dispatcher): string | undefined {
  * @param api
  */
 export function useIsRequest(api: Dispatcher): boolean {
-    return api?.isRequest();
+    return api?.isRequest?.();
 }
 
 /**
@@ -114,7 +114,7 @@ export function useIsRequest(api: Dispatcher): boolean {
  * @param api
  */
 export function useIsSuccess(api: Dispatcher): boolean {
-    return api?.isSuccess();
+    return api?.isSuccess?.();
 }
 
 /**
@@ -122,7 +122,7 @@ export function useIsSuccess(api: Dispatcher): boolean {
  * @param api
  */
 export function useIsFailure(api: Dispatcher): boolean {
-    return api?.isFailure();
+    return api?.isFailure?.();
 }
 
 /**

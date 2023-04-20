@@ -10,22 +10,22 @@ export interface Hooks {
     /**
      * Callback before request.
      */
-    beforeRequest?: Middleware,
+    beforeRequest?: Middleware;
 
     /**
      * Callback after request.
      */
-    onRequest?: Middleware,
+    onRequest?: Middleware;
 
     /**
      * Callback after response.
      */
-    onResponse?: Middleware
+    onResponse?: Middleware;
 
-    /**
-     * Callback on error.
-     */
-    onError?: Middleware
+    // /**
+    //  * Callback on error.
+    //  */
+    // onError?: Middleware;
 
 }
 
@@ -34,27 +34,27 @@ export type VivyApiPluginOption = Hooks & {
     /**
      * NameSpace of "apiStatus" Model
      */
-    apiStatusModelNameSpace?: string,
+    apiStatusModelNameSpace?: string;
 
     /**
      * Check response to differ whether the response is successful
      */
-    checkResponseStatus?: (response?: Response | any) => boolean,
+    checkResponseStatus?: (response?: Response | any) => boolean;
 
     /**
      * Handle any kind of response
      */
-    responseHandler?: Middleware,
+    responseHandler?: Middleware;
 
     /**
      * Handle success response
      */
-    successResponseHandler?: Middleware,
+    successResponseHandler?: Middleware;
 
     /**
      * Handle failure response
      */
-    failureResponseHandler?: Middleware
+    failureResponseHandler?: Middleware;
 
 }
 

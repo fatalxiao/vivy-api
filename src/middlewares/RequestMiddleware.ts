@@ -24,11 +24,11 @@ function defaultCheckResponseStatus(response: Response): boolean {
  * @param beforeRequest
  * @param onRequest
  * @param onResponse
- * @param onError
+ // * @param onError
  */
 export default function createRequestMiddleware(
     apiStatusModelNameSpace: string, checkResponseStatus: (response: Response | any) => boolean,
-    beforeRequest?: Middleware, onRequest?: Middleware, onResponse?: Middleware, onError?: Middleware
+    beforeRequest?: Middleware, onRequest?: Middleware, onResponse?: Middleware // , onError?: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => async action => {
 
@@ -42,21 +42,6 @@ export default function createRequestMiddleware(
         const {[CALL_API_PARAMS]: callApiParams, api, params, ...restOptions} = options;
         const {nameSpace, apiActionName, types} = callApiParams;
         const [requestType, successType, failureType] = types;
-
-        // Do request action
-        next({
-            ...restOptions,
-            type: requestType,
-            nameSpace,
-            apiActionName,
-            api,
-            params
-        });
-        dispatch({
-            type: `${apiStatusModelNameSpace}/request`,
-            nameSpace,
-            apiActionName
-        });
 
         /**
          * Handle plugin hook.
@@ -150,47 +135,64 @@ export default function createRequestMiddleware(
 
         }
 
-        try {
+        // Do request action
+        next({
+            ...restOptions,
+            type: requestType,
+            nameSpace,
+            apiActionName,
+            api,
+            params
+        });
+        dispatch({
+            type: `${apiStatusModelNameSpace}/request`,
+            nameSpace,
+            apiActionName
+        });
 
-            // Call beforeRequest
-            if (handleHook(beforeRequest) === false) {
-                return;
-            }
+        // try {
 
-            // Call onRequest
-            handleHook(onRequest);
-
-            // Call api and get response
-            const response = await api({
-                ...restOptions,
-                params
-            });
-
-            // Call onResponse
-            handleHook(onResponse, {
-                response
-            });
-
-            // Handle response
-            handleResponse(response);
-
-        } catch (error: any) {
-
-            // Call onResponse when error
-            handleHook(onResponse, {
-                response: error?.response,
-                error
-            });
-
-            // Call onResponse when error
-            handleHook(onError, {
-                error
-            });
-
-            // Handle response when error
-            handleResponse(error?.response, error);
-
+        // Call beforeRequest
+        if (handleHook(beforeRequest) === false) {
+            return;
         }
+
+        // Call onRequest
+        handleHook(onRequest);
+
+        // Call api and get response
+        const response = await api({
+            ...restOptions,
+            params
+        });
+
+        // Call onResponse
+        handleHook(onResponse, {
+            response
+        });
+
+        // Handle response
+        handleResponse(response);
+
+        // } catch (error: any) {
+        //
+        //     console.error(error);
+        //
+        //     // Call onResponse when error
+        //     handleHook(onResponse, {
+        //         response: error?.response,
+        //         error
+        //     });
+        //
+        //     // Call onResponse when error
+        //     handleHook(onError, {
+        //         error
+        //     });
+        //
+        //     // Handle response when error
+        //     handleResponse(error?.response, error);
+        //
+        // }
 
     };
 }

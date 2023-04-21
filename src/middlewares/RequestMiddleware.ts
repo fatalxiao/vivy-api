@@ -184,7 +184,7 @@ export default function createRequestMiddleware(
 
         } catch (error: any) {
 
-            if (process?.env?.NODE_ENV && process.env.NODE_ENV !== 'production') {
+            if (process.env.NODE_ENV !== 'production') {
                 console.error(error);
             }
 

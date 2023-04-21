@@ -29,7 +29,7 @@ import {Dispatcher} from 'react-vivy';
  */
 const DEFAULT_OPTIONS = {
     apiStatusModelNameSpace: 'apiStatus',
-    checkResponseStatus: (response: Response) => response.status >= 200 && response.status < 300
+    checkResponseStatus: (response: Response, error?: Error) => response.status >= 200 && response.status < 300
 };
 
 let optionApiStatusModelNameSpace: string;

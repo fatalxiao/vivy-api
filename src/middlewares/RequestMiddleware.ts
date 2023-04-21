@@ -184,7 +184,9 @@ export default function createRequestMiddleware(
 
         } catch (error: any) {
 
-            console.error(error);
+            if (process?.env?.NODE_ENV && process.env.NODE_ENV !== 'production') {
+                console.error(error);
+            }
 
             // Call onResponse when error
             handleHook(onResponse, {

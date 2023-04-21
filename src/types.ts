@@ -42,6 +42,11 @@ export type VivyApiPluginOption = Hooks & {
     checkResponseStatus?: (response?: Response | any, error?: Error) => boolean;
 
     /**
+     * Check response to differ whether the response is canceled
+     */
+    checkCanceledResponse?: (response?: Response | any, error?: Error) => boolean;
+
+    /**
      * Handle any kind of response
      */
     responseHandler?: Middleware;

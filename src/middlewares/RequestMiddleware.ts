@@ -21,13 +21,16 @@ function defaultCheckResponseStatus(response: Response): boolean {
  * Create RequestMiddleware
  * @param apiStatusModelNameSpace
  * @param checkResponseStatus
+ * @param checkCanceledResponse
  * @param beforeRequest
  * @param onRequest
  * @param onResponse
  * @param onError
  */
 export default function createRequestMiddleware(
-    apiStatusModelNameSpace: string, checkResponseStatus: (response: Response | any, error?: Error) => boolean,
+    apiStatusModelNameSpace: string,
+    checkResponseStatus?: (response: Response | any, error?: Error) => boolean,
+    checkCanceledResponse?: (response: Response | any, error?: Error) => boolean,
     beforeRequest?: Middleware, onRequest?: Middleware, onResponse?: Middleware, onError?: Middleware
 ): Middleware {
     return ({dispatch, getState}) => next => async action => {
@@ -121,6 +124,11 @@ export default function createRequestMiddleware(
             // if (error) {
             //     return handleFailureResponse(response, error);
             // }
+
+            if (checkCanceledResponse && typeof checkCanceledResponse === 'function'
+                && checkCanceledResponse(response, error)) {
+                return;
+            }
 
             if (
                 checkResponseStatus && typeof checkResponseStatus === 'function' ?

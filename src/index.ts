@@ -29,7 +29,7 @@ import {Dispatcher} from 'react-vivy';
  */
 const DEFAULT_OPTIONS = {
     apiStatusModelNameSpace: 'apiStatus',
-    checkResponseStatus: (response: Response, error?: Error) => response.status >= 200 && response.status < 300
+    checkResponseStatus: (response: Response) => response.status >= 200 && response.status < 300
 };
 
 let optionApiStatusModelNameSpace: string;
@@ -136,8 +136,10 @@ export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
 
     const {
         apiStatusModelNameSpace,
-        beforeRequest, onRequest, onResponse, onError,
-        checkResponseStatus, responseHandler, successResponseHandler, failureResponseHandler
+        checkResponseStatus, checkCanceledResponse,
+        responseHandler, successResponseHandler, failureResponseHandler,
+        beforeRequest, onRequest,
+        onResponse, onError,
     } = opts;
 
     optionApiStatusModelNameSpace = apiStatusModelNameSpace;
@@ -145,7 +147,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
     return {
         extraMiddlewares: [
             createRequestMiddleware(
-                apiStatusModelNameSpace, checkResponseStatus,
+                apiStatusModelNameSpace, checkResponseStatus, checkCanceledResponse,
                 beforeRequest, onRequest, onResponse, onError
             ),
             createSuccessResponseMiddleware(responseHandler, successResponseHandler),

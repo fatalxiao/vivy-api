@@ -22,10 +22,10 @@ export interface Hooks {
      */
     onResponse?: Middleware;
 
-    // /**
-    //  * Callback on error.
-    //  */
-    // onError?: Middleware;
+    /**
+     * Callback on error.
+     */
+    onError?: Middleware;
 
 }
 

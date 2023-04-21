@@ -136,7 +136,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
 
     const {
         apiStatusModelNameSpace,
-        beforeRequest, onRequest, onResponse, // onError,
+        beforeRequest, onRequest, onResponse, onError,
         checkResponseStatus, responseHandler, successResponseHandler, failureResponseHandler
     } = opts;
 
@@ -146,7 +146,7 @@ export default function VivyApi(options: VivyApiPluginOption = {}): VivyPlugin {
         extraMiddlewares: [
             createRequestMiddleware(
                 apiStatusModelNameSpace, checkResponseStatus,
-                beforeRequest, onRequest, onResponse // , onError
+                beforeRequest, onRequest, onResponse, onError
             ),
             createSuccessResponseMiddleware(responseHandler, successResponseHandler),
             createFailureResponseMiddleware(responseHandler, failureResponseHandler)
